@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthy Water | Agua Purificada - Pedidos en 1 Clic</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#00A0E3',
+              blue: '#0B4F8A',
+              navy: '#052A4A',
+              light: '#E6F6FD',
+              accent: '#00C896',
+              warning: '#F59E0B'
+            }
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-sm">
+    <span>💧 Entregas activas hoy en <strong>León Norte</strong> · Garrafones 100% microfiltrados · Pedidos en 1 clic </span>
+    <span class="hidden md:inline ml-3 bg-white/20 px-2 py-0.5 rounded-full text-xs">🚀 Prueba Piloto USAG - Equipo 4</span>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+      
+      <!-- LOGO -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('pedidos')">
+        <img src="assets/logo.png" alt="Healthy Water" class="h-14 w-auto object-contain">
+        <div>
+          <span class="text-xs uppercase tracking-widest text-brand-cyan font-bold block">Purificadora</span>
+          <span class="text-xl font-extrabold text-brand-navy tracking-tight">Healthy Water</span>
+        </div>
+      </div>
+
+      <!-- NAV TABS -->
+      <nav class="hidden md:flex space-x-2">
+        <button onclick="switchTab('pedidos')" id="tab-btn-pedidos" class="nav-tab active-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
+          <i class="fa-solid fa-bottle-water mr-1.5"></i> Pedir Agua (1 Clic)
+        </button>
+        <button onclick="switchTab('repartidores')" id="tab-btn-repartidores" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
+          <i class="fa-solid fa-truck mr-1.5"></i> Rutas & Repartidores
+        </button>
+        <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
+          <i class="fa-solid fa-chart-line mr-1.5"></i> Estadísticas & Ventas
+        </button>
+        <button onclick="switchTab('marketing')" id="tab-btn-marketing" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
+          <i class="fa-solid fa-clapperboard mr-1.5"></i> Campaña Video & Niños
+        </button>
+      </nav>
+
+      <!-- SUPABASE STATUS BADGE & QUICK CONTACT -->
+      <div class="flex items-center space-x-3">
+        <div class="hidden lg:flex items-center text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-full font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
+          <span>Supabase: Conectado</span>
+        </div>
+        <a href="https://wa.me/524770000000?text=Hola%20Healthy%20Water,%20deseo%20hacer%20un%20pedido" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center shadow-sm transition">
+          <i class="fa-brands fa-whatsapp text-lg mr-1.5"></i>
+          <span class="hidden sm:inline">WhatsApp</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- MOBILE NAVIGATION (SCROLLABLE) -->
+    <div class="md:hidden flex overflow-x-auto px-4 py-2 space-x-2 border-t border-slate-100 bg-slate-50 text-xs">
+      <button onclick="switchTab('pedidos')" id="mob-tab-pedidos" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold bg-brand-cyan text-white">Pedir (1 Clic)</button>
+      <button onclick="switchTab('repartidores')" id="mob-tab-repartidores" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Rutas</button>
+      <button onclick="switchTab('dashboard')" id="mob-tab-dashboard" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Estadísticas</button>
+      <button onclick="switchTab('marketing')" id="mob-tab-marketing" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Video & Marketing</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+    <!-- ================================================================= -->
+    <!-- TAB 1: CAPTACIÓN Y PEDIDOS EN 1 CLIC (CLIENTES B2C & B2B) -->
+    <!-- ================================================================= -->
+    <section id="tab-pedidos" class="tab-content block">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-navy via-brand-blue to-brand-cyan text-white p-6 sm:p-10 mb-8 shadow-xl">
+        <div class="relative z-10 max-w-2xl">
+          <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3 uppercase tracking-wider backdrop-blur-sm">
+            💧 Hidratación Sana y Segura en León Guanajuato
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+            El agua pura que cuida a tu familia y a tu empresa.
+          </h1>
+          <p class="text-slate-100 text-sm sm:text-base mb-6 leading-relaxed">
+            Sin complicaciones ni demoras. Selecciona tus garrafones o botellas, ingresa tu horario y recibe en tu puerta con entrega puntual en la <strong>Zona Norte de León</strong>.
+          </p>
+
+          <!-- CLIENT TYPE SELECTOR (TOGGLE HOGAR / EMPRESA) -->
+          <div class="inline-flex p-1.5 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30 shadow-inner">
+            <button type="button" onclick="setClientType('hogar')" id="type-btn-hogar" class="px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center bg-white text-brand-navy shadow-md">
+              <i class="fa-solid fa-house-chimney mr-2 text-brand-cyan"></i> Hogar & Amas de Casa
+              <span class="ml-2 text-xs bg-brand-light text-brand-blue font-bold px-2 py-0.5 rounded-full">Efectivo</span>
+            </button>
+            <button type="button" onclick="setClientType('empresa')" id="type-btn-empresa" class="px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center text-white hover:text-slate-200">
+              <i class="fa-solid fa-building mr-2 text-yellow-300"></i> Empresas & Oficinas
+              <span class="ml-2 text-xs bg-yellow-400 text-slate-900 font-bold px-2 py-0.5 rounded-full">Crédito & Factura</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- DECORATIVE WATER DROPLET BACKGROUND -->
+        <div class="absolute -right-10 -bottom-10 opacity-15 pointer-events-none">
+          <i class="fa-solid fa-droplet text-[320px] text-white"></i>
+        </div>
+      </div>
+
+      <!-- MAIN ORDERING WORKSPACE (GRID: PRODUCTS + CART/FORM) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- PRODUCTS CATALOG (LEFT 7 COLS) -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-extrabold text-slate-800 flex items-center">
+              <i class="fa-solid fa-cubes-stacked text-brand-cyan mr-2.5"></i>
+              Gama de Productos Disponibles
+            </h2>
+            <span class="text-xs text-slate-500 font-medium" id="stock-status-tag">
+              <i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> Stock verificado en planta
+            </span>
+          </div>
+
+          <!-- PRODUCT CARDS CONTAINER -->
+          <div id="product-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Dynamic products will be injected by JavaScript -->
+          </div>
+
+          <!-- B2B CORPORATE ADVANTAGES BANNER -->
+          <div id="b2b-corporate-banner" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-4 text-amber-900 text-xs sm:text-sm">
+            <div class="flex items-start space-x-3">
+              <div class="p-2 bg-amber-200 rounded-xl text-amber-800">
+                <i class="fa-solid fa-file-invoice-dollar text-xl"></i>
+              </div>
+              <div>
+                <strong class="font-bold block text-base">Beneficios Corporativos Healthy Water</strong>
+                <p class="text-slate-600 mt-1">Facturación CFDI instantánea al entregar, crédito a <strong>15 o 30 días</strong> y precios con descuento preferencial por volumen para oficinas en León Norte.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORDER SUMMARY & 1-CLICK CHECKOUT FORM (RIGHT 5 COLS) -->
+        <div class="lg:col-span-5">
+          <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-lg border border-slate-200 sticky top-28">
+            
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+              <h3 class="text-lg font-extrabold text-brand-navy flex items-center">
+                <i class="fa-solid fa-cart-shopping text-brand-cyan mr-2"></i> Tu Pedido Express
+              </h3>
+              <span id="order-type-badge" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-blue-100 text-brand-blue">
+                Modalidad Hogar
+              </span>
+            </div>
+
+            <!-- CART ITEMS LIST -->
+            <div id="cart-items-list" class="py-4 space-y-3 max-h-56 overflow-y-auto">
+              <p class="text-center text-slate-400 text-sm py-4 italic">No has seleccionado ningún producto aún. Haz clic en (+) en el catálogo.</p>
+            </div>
+
+            <!-- TOTAL BAR -->
+            <div class="border-t border-slate-100 pt-3 pb-4">
+              <div class="flex justify-between items-center text-sm text-slate-600 mb-1">
+                <span>Subtotal estimado:</span>
+                <span id="cart-subtotal" class="font-semibold text-slate-800">$0.00 MXN</span>
+              </div>
+              <div class="flex justify-between items-center text-xs text-emerald-600 font-medium mb-2">
+                <span>Envío a domicilio en León Norte:</span>
+                <span>¡GRATIS!</span>
+              </div>
+              <div class="flex justify-between items-center text-xl font-extrabold text-brand-navy">
+                <span>Total a Pagar:</span>
+                <span id="cart-total" class="text-brand-blue">$0.00 MXN</span>
+              </div>
+            </div>
+
+            <!-- FAST 1-CLICK FORM -->
+            <form id="order-form" onsubmit="handlePlaceOrder(event)" class="space-y-4 pt-2">
+              
+              <!-- CONTACT NAME -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Nombre Completo / Contacto *
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                  <input type="text" id="cust-name" required placeholder="Ej. Gabriela Campuzano" class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition outline-none">
+                </div>
+              </div>
+
+              <!-- PHONE / WHATSAPP -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Teléfono Móvil / WhatsApp *
+                </label>
+                <div class="relative">
+                  <i class="fa-brands fa-whatsapp absolute left-3.5 top-3.5 text-emerald-500 text-base"></i>
+                  <input type="tel" id="cust-phone" required placeholder="Ej. 477 123 4567" class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition outline-none">
+                </div>
+              </div>
+
+              <!-- DELIVERY ADDRESS WITH GPS AUTOCOMPLETE -->
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Dirección de Entrega (León, Gto.) *
+                  </label>
+                  <button type="button" onclick="getGPSLocation()" class="text-xs text-brand-blue font-semibold hover:underline flex items-center">
+                    <i class="fa-solid fa-location-crosshairs text-brand-cyan mr-1"></i> Mi GPS
+                  </button>
+                </div>
+                <div class="relative">
+                  <i class="fa-solid fa-map-pin absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                  <input type="text" id="cust-address" required placeholder="Calle, # ext/int, Colonia en León Norte" class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition outline-none">
+                </div>
+                <p id="gps-coords-display" class="text-[11px] text-emerald-600 mt-1 hidden"></p>
+              </div>
+
+              <!-- PREFERRED DELIVERY TIME WINDOW -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Horario Preferido de Visita *
+                </label>
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                  <label class="cursor-pointer border border-slate-200 rounded-xl p-2 text-center hover:border-brand-cyan has-[:checked]:border-brand-cyan has-[:checked]:bg-brand-light transition">
+                    <input type="radio" name="horario" value="Matutino (09:00 - 12:00)" checked class="hidden">
+                    <i class="fa-solid fa-sun text-amber-500 block text-sm mb-1"></i>
+                    <span class="font-semibold block text-[11px]">9:00 - 12:00</span>
+                  </label>
+                  <label class="cursor-pointer border border-slate-200 rounded-xl p-2 text-center hover:border-brand-cyan has-[:checked]:border-brand-cyan has-[:checked]:bg-brand-light transition">
+                    <input type="radio" name="horario" value="Mediodía (12:00 - 15:00)" class="hidden">
+                    <i class="fa-solid fa-clock text-blue-500 block text-sm mb-1"></i>
+                    <span class="font-semibold block text-[11px]">12:00 - 15:00</span>
+                  </label>
+                  <label class="cursor-pointer border border-slate-200 rounded-xl p-2 text-center hover:border-brand-cyan has-[:checked]:border-brand-cyan has-[:checked]:bg-brand-light transition">
+                    <input type="radio" name="horario" value="Vespertino (15:00 - 18:00)" class="hidden">
+                    <i class="fa-solid fa-cloud-sun text-indigo-500 block text-sm mb-1"></i>
+                    <span class="font-semibold block text-[11px]">15:00 - 18:00</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- PAYMENT METHOD & INVOICE FIELDS -->
+              <div id="payment-section" class="pt-2">
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Forma de Pago *
+                </label>
+                
+                <!-- B2C PAYMENT (HOGAR) -->
+                <div id="payment-hogar" class="space-y-2">
+                  <div class="flex items-center space-x-2 text-xs bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <i class="fa-solid fa-money-bill-wave text-emerald-600 text-lg"></i>
+                    <span class="font-medium text-slate-700">Efectivo contra entrega al repartidor</span>
+                  </div>
+                  <input type="text" id="cust-change" placeholder="¿Con cuánto vas a pagar? (Para llevarte cambio)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-1 focus:ring-brand-cyan outline-none">
+                </div>
+
+                <!-- B2B PAYMENT (EMPRESAS) -->
+                <div id="payment-empresa" class="hidden space-y-3">
+                  <select id="cust-b2b-terms" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-brand-cyan outline-none bg-white">
+                    <option value="credito_15d">Crédito a 15 días (Convenio Corporativo)</option>
+                    <option value="credito_30d">Crédito a 30 días (Grandes Cuentas)</option>
+                    <option value="transferencia">Transferencia Electrónica (SPEI)</option>
+                  </select>
+
+                  <!-- INVOICE FIELDS -->
+                  <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+                    <span class="font-bold text-brand-navy block"><i class="fa-solid fa-receipt mr-1"></i> Datos de Facturación CFDI:</span>
+                    <input type="text" id="cust-rfc" placeholder="RFC de la Empresa (12 o 13 carácteres)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 uppercase">
+                    <input type="text" id="cust-razon" placeholder="Razón Social completa" class="w-full px-3 py-1.5 rounded-lg border border-slate-300">
+                    <input type="email" id="cust-email" placeholder="Correo para envío de Factura PDF/XML" class="w-full px-3 py-1.5 rounded-lg border border-slate-300">
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUBMIT BUTTON (1 CLIC) -->
+              <button type="submit" id="submit-order-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-cyan to-brand-blue hover:from-brand-blue hover:to-brand-navy text-white font-extrabold text-base shadow-lg shadow-brand-cyan/30 flex items-center justify-center transition active:scale-[0.98]">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Confirmar Pedido en 1 Clic
+              </button>
+
+              <p class="text-[11px] text-center text-slate-400">
+                <i class="fa-solid fa-shield-halved text-emerald-500 mr-1"></i> Protección de datos éticos garantizada (USAG Ética & IA).
+              </p>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================================================= -->
+    <!-- TAB 2: RUTAS, REPARTIDORES & ASISTENTE IA DE REPROGRAMACIÓN -->
+    <!-- ================================================================= -->
+    <section id="tab-repartidores" class="tab-content hidden space-y-8">
+      
+      <!-- HEADER OF ROUTE DISPATCH -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+        <div>
+          <h2 class="text-2xl font-extrabold text-brand-navy flex items-center">
+            <i class="fa-solid fa-route text-brand-cyan mr-3"></i>
+            Hoja de Ruta Digital: León Norte
+          </h2>
+          <p class="text-sm text-slate-500">Unidad #01 · Repartidor asignado: Manuel Velázquez · Vehículo Placas: GTO-849-B</p>
+        </div>
+        
+        <!-- VEHICLE LOAD CAPACITY (LIMIT 50-60 GARRAFONES) -->
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl min-w-[280px]">
+          <div class="flex justify-between items-center text-xs font-bold text-slate-700 mb-1.5">
+            <span>Carga del Vehículo (Límite: 60)</span>
+            <span id="load-count" class="text-brand-blue">42 / 60 Garrafones</span>
+          </div>
+          <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+            <div id="load-bar" class="bg-brand-cyan h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
+          </div>
+          <span class="text-[11px] text-slate-500 mt-1 block">Capacidad operativa óptima para no forzar la unidad.</span>
+        </div>
+      </div>
+
+      <!-- DISPATCH LIST & ORDERS IN ROUTE -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-slate-800">Paradas Programadas para Hoy</h3>
+          <span class="text-xs bg-brand-light text-brand-blue font-bold px-3 py-1 rounded-full">
+            Optimizada con Algoritmo de Proximidad
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-y border-slate-200">
+              <tr>
+                <th class="py-3 px-4"># Orden</th>
+                <th class="py-3 px-4">Cliente / Tipo</th>
+                <th class="py-3 px-4">Dirección</th>
+                <th class="py-3 px-4">Pedido</th>
+                <th class="py-3 px-4">Horario</th>
+                <th class="py-3 px-4">Cobro</th>
+                <th class="py-3 px-4">Estado</th>
+                <th class="py-3 px-4 text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="routes-table-body" class="divide-y divide-slate-100">
+              <!-- Dynamically rendered rows by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- IA REPROGRAMMING NOTICE BANNER -->
+      <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-3xl p-6 shadow-md flex items-start space-x-4">
+        <div class="p-3 bg-white/10 rounded-2xl text-cyan-300 text-2xl">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-extrabold text-lg text-cyan-200">Módulo de Reprogramación Proactiva con IA</h4>
+          <p class="text-sm text-slate-200 mt-1">
+            Si un cliente no es localizado en su domicilio, el sistema de IA no cancela el pedido: dispara una propuesta por WhatsApp ofreciendo dos nuevos horarios automáticos en la misma zona y alerta a <strong>Yessica Carmona (Filtro Humano)</strong> para garantizar que <em>ningún cliente se quede sin agua</em>.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ================================================================= -->
+    <!-- TAB 3: ESTADÍSTICAS, VENTAS & GRÁFICAS (DASHBOARD BI) -->
+    <!-- ================================================================= -->
+    <section id="tab-dashboard" class="tab-content hidden space-y-8">
+      
+      <!-- TOP METRIC CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-semibold uppercase">Ventas de Hoy</span>
+            <h4 id="stat-ventas-hoy" class="text-2xl font-extrabold text-slate-800">$2,475 MXN</h4>
+            <span class="text-[11px] text-emerald-600 font-bold"><i class="fa-solid fa-arrow-trend-up mr-0.5"></i> +18% vs ayer</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-brand-cyan flex items-center justify-center text-xl">
+            <i class="fa-solid fa-droplet"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-semibold uppercase">Garrafones Entregados</span>
+            <h4 id="stat-garrafones-hoy" class="text-2xl font-extrabold text-slate-800">55 Unidades</h4>
+            <span class="text-[11px] text-brand-blue font-bold">Capacidad 92% cubierta</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-2xl bg-blue-100 text-brand-blue flex items-center justify-center text-xl">
+            <i class="fa-solid fa-user-plus"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-semibold uppercase">Nuevos Clientes Web</span>
+            <h4 id="stat-clientes-nuevos" class="text-2xl font-extrabold text-slate-800">14 Registros</h4>
+            <span class="text-[11px] text-emerald-600 font-bold">Captación en 1 clic</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 font-semibold uppercase">Efectividad de Entrega</span>
+            <h4 id="stat-efectividad" class="text-2xl font-extrabold text-slate-800">96.5%</h4>
+            <span class="text-[11px] text-slate-500 font-bold">2 reprogramados por IA</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CHARTS SECTION -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- CHART 1: SALES BY DAY -->
+        <div class="lg:col-span-8 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="font-extrabold text-lg text-slate-800">Ventas Diarias y Tendencia de Captación</h3>
+              <p class="text-xs text-slate-400">Total en pesos ($ MXN) por día de la semana en la prueba piloto.</p>
+            </div>
+            <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-bold">León Norte</span>
+          </div>
+          <div class="h-72">
+            <canvas id="salesChart"></canvas>
+          </div>
+        </div>
+
+        <!-- CHART 2: REVENUE MIX (HOGAR VS EMPRESA) -->
+        <div class="lg:col-span-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-extrabold text-lg text-slate-800 mb-1">Distribución de Ingresos</h3>
+            <p class="text-xs text-slate-400 mb-4">Venta de Contado (Hogares) vs Crédito (Empresas)</p>
+            <div class="h-56">
+              <canvas id="mixChart"></canvas>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 text-xs space-y-1 text-slate-500">
+            <div class="flex justify-between">
+              <span>Efectivo cobrado en ruta:</span>
+              <strong class="text-slate-700">65%</strong>
+            </div>
+            <div class="flex justify-between">
+              <span>Créditos comerciales B2B:</span>
+              <strong class="text-amber-600">35%</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TEAM ROLES ACCORDION (USAG PROYECTO MAESTRÍA) -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+        <h3 class="font-extrabold text-base text-brand-navy mb-4 flex items-center">
+          <i class="fa-solid fa-users-gear text-brand-cyan mr-2"></i>
+          Asignación Operativa del Equipo 4 · USAG
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center text-xs">
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <strong class="block text-slate-800 font-bold">Margarita Anda</strong>
+            <span class="text-brand-blue">Coordinación General</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <strong class="block text-slate-800 font-bold">Gabriela Campuzano</strong>
+            <span class="text-brand-blue">Registro & Prototipo</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <strong class="block text-slate-800 font-bold">Yessica Carmona</strong>
+            <span class="text-brand-blue">Filtro Humano & Ética</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <strong class="block text-slate-800 font-bold">Edgar Robledo</strong>
+            <span class="text-brand-blue">Marketing & Video</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <strong class="block text-slate-800 font-bold">Manuel Velázquez</strong>
+            <span class="text-brand-blue">Rutas & Reparto</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <strong class="block text-slate-800 font-bold">Jazmín Farre</strong>
+            <span class="text-brand-blue">Revisión & Viabilidad</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ================================================================= -->
+    <!-- TAB 4: MARKETING, VIDEO PUBLICITARIO & NIÑOS -->
+    <!-- ================================================================= -->
+    <section id="tab-marketing" class="tab-content hidden space-y-8">
+      
+      <div class="bg-gradient-to-r from-brand-navy to-brand-blue text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="max-w-2xl">
+          <span class="text-xs bg-white/20 text-cyan-200 font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            🎬 Estrategia de Mercadotecnia Audiovisual
+          </span>
+          <h2 class="text-3xl font-extrabold mt-2 mb-3">
+            "La Pureza que Cuida a Quienes Más Amas"
+          </h2>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            Campaña diseñada para redes sociales (TikTok, Reels e Historias de WhatsApp) que vincula la ternura y vitalidad de los niños con la pureza certificada de <strong>Healthy Water</strong>, abriendo la captación familiar y convenios con empresas.
+          </p>
+        </div>
+        <img src="assets/logo.png" alt="Healthy Water" class="h-24 bg-white/95 p-3 rounded-2xl shadow-lg">
+      </div>
+
+      <!-- MULTIMEDIA SHOWCASE & STORYBOARD -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- VISUAL ASSETS OF THE CAMPAIGN (PHOTOS OF THE CHILDREN) -->
+        <div class="lg:col-span-5 space-y-4">
+          <h3 class="font-extrabold text-lg text-slate-800 flex items-center">
+            <i class="fa-solid fa-camera-retro text-brand-cyan mr-2"></i>
+            Material Visual de Campaña
+          </h3>
+
+          <!-- CARD PHOTO 1: EL NIÑO JUGANDO -->
+          <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm overflow-hidden">
+            <div class="relative rounded-2xl overflow-hidden aspect-[4/5] bg-slate-100">
+              <img src="assets/foto_campana_2.jpg" alt="Niño con energía en el parque" class="w-full h-full object-cover">
+              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white text-xs">
+                <span class="bg-brand-cyan text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Toma 1: Vitalidad & Crecimiento</span>
+                <p class="font-bold text-sm mt-1">"Energía y Salud en Cada Gota"</p>
+                <p class="text-slate-300 text-[11px]">Encuadre inicial: El niño jugando lleno de vitalidad y bienestar.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD PHOTO 2: LOS HERMANITOS Y EL BEBÉ -->
+          <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm overflow-hidden">
+            <div class="relative rounded-2xl overflow-hidden aspect-[4/5] bg-slate-100">
+              <img src="assets/foto_campana_1.jpg" alt="Hermanitos y el bebé con mameluco" class="w-full h-full object-cover">
+              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white text-xs">
+                <span class="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Toma 2: Ternura & Protección</span>
+                <p class="font-bold text-sm mt-1">"100% Agua Purificada y Segura"</p>
+                <p class="text-slate-300 text-[11px]">Encuadre emotivo: La inocencia del bebé y el cuidado de los que amas.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FULL SCRIPT & TIMELINE (RIGHT 7 COLS) -->
+        <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div>
+              <h3 class="font-extrabold text-xl text-brand-navy">Guion Técnico para Redes Sociales</h3>
+              <p class="text-xs text-slate-500">Duración: 35 segundos · Formato Vertical 9:16 (TikTok, Reels, Shorts)</p>
+            </div>
+            <button onclick="playMockVoiceover()" id="play-audio-btn" class="px-4 py-2 bg-brand-cyan hover:bg-brand-blue text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm">
+              <i class="fa-solid fa-volume-high mr-1.5"></i> Escuchar Locución
+            </button>
+          </div>
+
+          <!-- TIMELINE OF SCENES -->
+          <div class="space-y-4">
+            
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
+                <span>00:00 - 00:06 · Escena 1 (Gancho Emocional)</span>
+                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Parque</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> El niño pequeño jugando con su estrellita en la frente, sonriendo con energía en el tobogán.</p>
+              <p class="text-sm text-slate-800 italic">"Verlos crecer sanos, activos y felices es lo que más nos importa a todos..."</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
+                <span>00:07 - 00:14 · Escena 2 (Cuidado Familiar)</span>
+                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Hermanitos</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> El hermanito mayor abrazando al bebé, mirando con ternura a la cámara.</p>
+              <p class="text-sm text-slate-800 italic">"...por eso en casa no te conformas con cualquier agua. Exiges la máxima pureza."</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
+                <span>00:15 - 00:21 · Escena 3 (Marca & Calidad)</span>
+                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Producto</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> El logotipo de Healthy Water con un vaso de agua cristalina sirviéndose con pureza.</p>
+              <p class="text-sm text-slate-800 italic">"Healthy Water: microfiltrada y purificada con la más alta tecnología para cuidar a quienes más amas."</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
+                <span>00:22 - 00:28 · Escena 4 (Canal Hogar & Empresas)</span>
+                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Pedido 1 Clic</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> Teléfono haciendo el pedido en 1 clic y oficina en León recibiendo sus garrafones con factura.</p>
+              <p class="text-sm text-slate-800 italic">"Pide en un clic desde tu celular. Pago en efectivo para tu hogar, o con crédito y facturación inmediata para tu empresa."</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
+                <span>00:29 - 00:35 · Escena 5 (Llamado a la Acción CTA)</span>
+                <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Cierre</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> Logotipo completo, botón de WhatsApp y enlace a la página web.</p>
+              <p class="text-sm text-slate-800 italic">"Healthy Water. Tu agua de siempre, ahora a un solo clic de distancia. ¡Haz tu pedido hoy!"</p>
+            </div>
+
+          </div>
+
+          <!-- DOWNLOAD MARKETING KIT -->
+          <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+            <span class="text-xs text-slate-500 font-medium">Kit de Publicación preparado para Edgar Robledo (Mercadotecnia).</span>
+            <button onclick="alert('El guion técnico y los recursos gráficos están listos para ser exportados a CapCut / Premiere.')" class="px-4 py-2 border border-slate-300 hover:bg-slate-50 rounded-xl text-xs font-bold text-slate-700 transition">
+              <i class="fa-solid fa-file-arrow-down mr-1"></i> Exportar Ficha Publicitaria
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- MODAL: SIMULADOR DE ASISTENTE IA DE REPROGRAMACIÓN -->
+  <!-- ================================================================= -->
+  <div id="ai-reschedule-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 transform transition-all scale-100">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center space-x-2 text-brand-navy font-extrabold text-lg">
+          <div class="w-8 h-8 rounded-xl bg-blue-100 text-brand-blue flex items-center justify-center text-sm">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <span>Agente IA de Reprogramación</span>
+        </div>
+        <button onclick="closeRescheduleModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="py-4 space-y-4 text-xs sm:text-sm">
+        <div class="bg-amber-50 border border-amber-200 text-amber-900 p-3 rounded-2xl flex items-start space-x-2">
+          <i class="fa-solid fa-triangle-exclamation text-base mt-0.5"></i>
+          <div>
+            <strong>Incidencia Reportada:</strong>
+            <p id="modal-client-info" class="text-slate-700 mt-0.5">El cliente no respondió en el timbre (Zona León Norte).</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+            Mensaje de WhatsApp Generado por la IA:
+          </label>
+          <textarea id="ai-generated-message" rows="4" class="w-full p-3 rounded-xl border border-slate-300 text-xs text-slate-700 font-mono bg-slate-50 focus:ring-2 focus:ring-brand-cyan outline-none leading-relaxed"></textarea>
+        </div>
+
+        <div class="p-3 bg-blue-50 rounded-2xl border border-blue-200 text-blue-900 text-xs">
+          <strong>Filtro Humano Activo:</strong> Supervisado por <em>Yessica Carmona (Atención y Pruebas)</em> para mantener empatía y confianza con el cliente.
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end space-x-3 pt-3 border-t border-slate-100">
+        <button onclick="closeRescheduleModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 transition">
+          Cancelar
+        </button>
+        <button onclick="confirmAiReschedule()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition flex items-center">
+          <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i> Enviar Propuesta por WhatsApp
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- MODAL: CONFIRMACIÓN EXITOSA DE PEDIDO -->
+  <!-- ================================================================= -->
+  <div id="order-success-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl border border-slate-100">
+      
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+
+      <h3 class="text-2xl font-extrabold text-slate-800 mb-2">¡Pedido Aperturado con Éxito!</h3>
+      <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+        Tu pedido ha sido registrado en la base de datos de <strong>Healthy Water</strong> y vinculado a la ruta de entrega de León Norte.
+      </p>
+
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2 mb-6">
+        <div class="flex justify-between">
+          <span class="text-slate-500">Folio:</span>
+          <strong id="modal-folio" class="text-brand-navy">HW-2026-1042</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Cliente:</span>
+          <strong id="modal-name">Gabriela Campuzano</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Horario acordado:</span>
+          <strong id="modal-horario" class="text-brand-blue">9:00 - 12:00</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Total a pagar:</span>
+          <strong id="modal-total" class="text-emerald-700 font-extrabold">$90.00 MXN</strong>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <a id="modal-whatsapp-link" href="#" target="_blank" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-bold shadow-md flex items-center justify-center transition">
+          <i class="fa-brands fa-whatsapp text-base mr-2"></i> Abrir Confirmación en WhatsApp
+        </a>
+        <button onclick="closeSuccessModal()" class="w-full py-2.5 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition">
+          Cerrar y ver estado de ruta
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-navy text-slate-400 text-xs py-8 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <img src="assets/logo.png" alt="Healthy Water" class="h-10 w-auto bg-white/90 p-1.5 rounded-lg">
+        <div>
+          <strong class="text-white block">Purificadora Healthy Water · León, Guanajuato</strong>
+          <span>Optimización de servicio con Inteligencia Artificial & Supabase</span>
+        </div>
+      </div>
+      <div class="text-center sm:text-right text-[11px]">
+        <p>Maestría en Alta Dirección y Planificación de Proyectos · USAG</p>
+        <p class="text-slate-500 mt-0.5">Equipo 4: Margarita, Gabriela, Yessica, Edgar, Manuel, Jazmín.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script src="app.js"></script>
+</body>
+</html>

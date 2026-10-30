@@ -1,0 +1,62 @@
+/* Custom Styles for Healthy Water Web App */
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Active Navigation Tab */
+.nav-tab.active-tab {
+  background-color: #00A0E3;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 160, 227, 0.25);
+}
+
+.nav-tab:not(.active-tab) {
+  color: #475569;
+}
+
+.nav-tab:not(.active-tab):hover {
+  background-color: #F1F5F9;
+  color: #0F172A;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Pulse badge animation */
+@keyframes softPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.pulse-soft {
+  animation: softPulse 2.5s infinite ease-in-out;
+}
