@@ -933,25 +933,39 @@ function updateChartsData() {
 }
 
 // ============================================================================
-// LUMA AI VIDEO PLAYER & FILE UPLOADER
+// LUMA AI VIDEO PLAYER & FILE UPLOADER (DETECCIÓN AUTOMÁTICA PERMANENTE)
 // ============================================================================
 function setupVideoUploader() {
   const fileInput = document.getElementById('luma-video-file-input');
   const videoPlayer = document.getElementById('luma-video-player');
   const placeholder = document.getElementById('video-placeholder');
 
-  if (!fileInput || !videoPlayer) return;
+  if (!videoPlayer) return;
 
-  fileInput.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      videoPlayer.src = url;
-      videoPlayer.classList.remove('hidden');
-      if (placeholder) placeholder.classList.add('hidden');
-      videoPlayer.play();
-    }
+  // Si el video de GitHub se carga correctamente, ocultamos el aviso
+  videoPlayer.addEventListener('canplay', () => {
+    videoPlayer.classList.remove('hidden');
+    if (placeholder) placeholder.classList.add('hidden');
   });
+
+  // Si el video aún no se ha subido a GitHub (da 404), mostramos la ayuda
+  videoPlayer.addEventListener('error', () => {
+    videoPlayer.classList.add('hidden');
+    if (placeholder) placeholder.classList.remove('hidden');
+  });
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        videoPlayer.src = url;
+        videoPlayer.classList.remove('hidden');
+        if (placeholder) placeholder.classList.add('hidden');
+        videoPlayer.play();
+      }
+    });
+  }
 }
 
 // ============================================================================
