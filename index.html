@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Healthy Water | Agua Purificada - Pedidos en 1 Clic</title>
+  <title>Healthy Water | Agua Purificada - Pedidos en 1 Clic (477-877-6369)</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js CDN -->
@@ -41,8 +41,8 @@
 
   <!-- TOP ANNOUNCEMENT BAR -->
   <div class="bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-sm">
-    <span>💧 Entregas activas hoy en <strong>León Norte</strong> · Garrafones 100% microfiltrados · Pedidos en 1 clic </span>
-    <span class="hidden md:inline ml-3 bg-white/20 px-2 py-0.5 rounded-full text-xs">🚀 Prueba Piloto USAG - Equipo 4</span>
+    <span>💧 Purificadora Healthy Water · WhatsApp de Pruebas: <strong>477-877-6369</strong> · Entregas en León Norte & Pipas</span>
+    <span class="hidden md:inline ml-3 bg-white/20 px-2 py-0.5 rounded-full text-xs">🚀 USAG Maestría - Equipo 4</span>
   </div>
 
   <!-- NAVIGATION BAR -->
@@ -59,30 +59,29 @@
       </div>
 
       <!-- NAV TABS -->
-      <nav class="hidden md:flex space-x-2">
-        <button onclick="switchTab('pedidos')" id="tab-btn-pedidos" class="nav-tab active-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
-          <i class="fa-solid fa-bottle-water mr-1.5"></i> Pedir Agua (1 Clic)
+      <nav class="hidden md:flex space-x-1 lg:space-x-2">
+        <button onclick="switchTab('pedidos')" id="tab-btn-pedidos" class="nav-tab active-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-solid fa-bottle-water mr-1"></i> Pedir Agua (1 Clic)
         </button>
-        <button onclick="switchTab('repartidores')" id="tab-btn-repartidores" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
-          <i class="fa-solid fa-truck mr-1.5"></i> Rutas & Repartidores
+        <button onclick="switchTab('repartidores')" id="tab-btn-repartidores" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-solid fa-truck mr-1"></i> Rutas & Reparto
         </button>
-        <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
-          <i class="fa-solid fa-chart-line mr-1.5"></i> Estadísticas & Ventas
+        <button onclick="switchTab('bot-whatsapp')" id="tab-btn-bot-whatsapp" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-brands fa-whatsapp text-emerald-500 mr-1"></i> Bot de Auto-respuesta
         </button>
-        <button onclick="switchTab('marketing')" id="tab-btn-marketing" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition">
-          <i class="fa-solid fa-clapperboard mr-1.5"></i> Campaña Video & Niños
+        <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-solid fa-chart-line mr-1"></i> Estadísticas
+        </button>
+        <button onclick="switchTab('marketing')" id="tab-btn-marketing" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-solid fa-clapperboard mr-1"></i> Video Luma IA
         </button>
       </nav>
 
-      <!-- SUPABASE STATUS BADGE & QUICK CONTACT -->
+      <!-- REAL WHATSAPP DIRECT BUTTON -->
       <div class="flex items-center space-x-3">
-        <div class="hidden lg:flex items-center text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-full font-medium">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
-          <span>Supabase: Conectado</span>
-        </div>
-        <a href="https://wa.me/524770000000?text=Hola%20Healthy%20Water,%20deseo%20hacer%20un%20pedido" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center shadow-sm transition">
-          <i class="fa-brands fa-whatsapp text-lg mr-1.5"></i>
-          <span class="hidden sm:inline">WhatsApp</span>
+        <a href="https://wa.me/524778776369?text=Hola%20Healthy%20Water,%20deseo%20hacer%20un%20pedido" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center shadow-sm transition">
+          <i class="fa-brands fa-whatsapp text-lg mr-1.5 animate-pulse"></i>
+          <span class="hidden sm:inline">477-877-6369</span>
         </a>
       </div>
 
@@ -92,8 +91,9 @@
     <div class="md:hidden flex overflow-x-auto px-4 py-2 space-x-2 border-t border-slate-100 bg-slate-50 text-xs">
       <button onclick="switchTab('pedidos')" id="mob-tab-pedidos" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold bg-brand-cyan text-white">Pedir (1 Clic)</button>
       <button onclick="switchTab('repartidores')" id="mob-tab-repartidores" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Rutas</button>
+      <button onclick="switchTab('bot-whatsapp')" id="mob-tab-bot-whatsapp" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Bot WhatsApp</button>
       <button onclick="switchTab('dashboard')" id="mob-tab-dashboard" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Estadísticas</button>
-      <button onclick="switchTab('marketing')" id="mob-tab-marketing" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Video & Marketing</button>
+      <button onclick="switchTab('marketing')" id="mob-tab-marketing" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Video Luma</button>
     </div>
   </header>
 
@@ -109,13 +109,13 @@
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-navy via-brand-blue to-brand-cyan text-white p-6 sm:p-10 mb-8 shadow-xl">
         <div class="relative z-10 max-w-2xl">
           <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3 uppercase tracking-wider backdrop-blur-sm">
-            💧 Hidratación Sana y Segura en León Guanajuato
+            💧 Purificadora Healthy Water · León, Guanajuato
           </span>
           <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
-            El agua pura que cuida a tu familia y a tu empresa.
+            El agua pura que cuida a tu familia y abastece a tu empresa.
           </h1>
           <p class="text-slate-100 text-sm sm:text-base mb-6 leading-relaxed">
-            Sin complicaciones ni demoras. Selecciona tus garrafones o botellas, ingresa tu horario y recibe en tu puerta con entrega puntual en la <strong>Zona Norte de León</strong>.
+            Desde <strong>Bolis de $1.00</strong> y <strong>Garrafones de 20L a $30.00</strong>, hasta <strong>Pipas de 10,000 Litros</strong>. Pide en 1 clic y recibe en la Zona Norte de León.
           </p>
 
           <!-- CLIENT TYPE SELECTOR (TOGGLE HOGAR / EMPRESA) -->
@@ -125,13 +125,12 @@
               <span class="ml-2 text-xs bg-brand-light text-brand-blue font-bold px-2 py-0.5 rounded-full">Efectivo</span>
             </button>
             <button type="button" onclick="setClientType('empresa')" id="type-btn-empresa" class="px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center text-white hover:text-slate-200">
-              <i class="fa-solid fa-building mr-2 text-yellow-300"></i> Empresas & Oficinas
+              <i class="fa-solid fa-building mr-2 text-yellow-300"></i> Empresas & Negocios
               <span class="ml-2 text-xs bg-yellow-400 text-slate-900 font-bold px-2 py-0.5 rounded-full">Crédito & Factura</span>
             </button>
           </div>
         </div>
 
-        <!-- DECORATIVE WATER DROPLET BACKGROUND -->
         <div class="absolute -right-10 -bottom-10 opacity-15 pointer-events-none">
           <i class="fa-solid fa-droplet text-[320px] text-white"></i>
         </div>
@@ -145,10 +144,10 @@
           <div class="flex items-center justify-between">
             <h2 class="text-xl font-extrabold text-slate-800 flex items-center">
               <i class="fa-solid fa-cubes-stacked text-brand-cyan mr-2.5"></i>
-              Gama de Productos Disponibles
+              Gama Oficial de Productos y Precios
             </h2>
             <span class="text-xs text-slate-500 font-medium" id="stock-status-tag">
-              <i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> Stock verificado en planta
+              <i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> Stock verificado
             </span>
           </div>
 
@@ -157,15 +156,15 @@
             <!-- Dynamic products will be injected by JavaScript -->
           </div>
 
-          <!-- B2B CORPORATE ADVANTAGES BANNER -->
+          <!-- PIPA & B2B CORPORATE ADVANTAGES BANNER -->
           <div id="b2b-corporate-banner" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-4 text-amber-900 text-xs sm:text-sm">
             <div class="flex items-start space-x-3">
               <div class="p-2 bg-amber-200 rounded-xl text-amber-800">
                 <i class="fa-solid fa-file-invoice-dollar text-xl"></i>
               </div>
               <div>
-                <strong class="font-bold block text-base">Beneficios Corporativos Healthy Water</strong>
-                <p class="text-slate-600 mt-1">Facturación CFDI instantánea al entregar, crédito a <strong>15 o 30 días</strong> y precios con descuento preferencial por volumen para oficinas en León Norte.</p>
+                <strong class="font-bold block text-base">Beneficios Corporativos & Pipas Healthy Water</strong>
+                <p class="text-slate-600 mt-1">Facturación CFDI instantánea, crédito comercial a <strong>15 o 30 días</strong> y capacidad para surtir cisternas industriales mediante <strong>Media Pipa (5,000L)</strong> o <strong>Pipa Completa (10,000L)</strong>.</p>
               </div>
             </div>
           </div>
@@ -192,12 +191,12 @@
             <!-- TOTAL BAR -->
             <div class="border-t border-slate-100 pt-3 pb-4">
               <div class="flex justify-between items-center text-sm text-slate-600 mb-1">
-                <span>Subtotal estimado:</span>
+                <span>Subtotal:</span>
                 <span id="cart-subtotal" class="font-semibold text-slate-800">$0.00 MXN</span>
               </div>
               <div class="flex justify-between items-center text-xs text-emerald-600 font-medium mb-2">
-                <span>Envío a domicilio en León Norte:</span>
-                <span>¡GRATIS!</span>
+                <span>Entrega a domicilio (León Norte):</span>
+                <span>¡INCLUIDO!</span>
               </div>
               <div class="flex justify-between items-center text-xl font-extrabold text-brand-navy">
                 <span>Total a Pagar:</span>
@@ -222,7 +221,7 @@
               <!-- PHONE / WHATSAPP -->
               <div>
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Teléfono Móvil / WhatsApp *
+                  Tu Teléfono WhatsApp *
                 </label>
                 <div class="relative">
                   <i class="fa-brands fa-whatsapp absolute left-3.5 top-3.5 text-emerald-500 text-base"></i>
@@ -242,7 +241,7 @@
                 </div>
                 <div class="relative">
                   <i class="fa-solid fa-map-pin absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-                  <input type="text" id="cust-address" required placeholder="Calle, # ext/int, Colonia en León Norte" class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition outline-none">
+                  <input type="text" id="cust-address" required placeholder="Calle, # ext/int, Colonia en León" class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition outline-none">
                 </div>
                 <p id="gps-coords-display" class="text-[11px] text-emerald-600 mt-1 hidden"></p>
               </div>
@@ -290,27 +289,26 @@
                 <div id="payment-empresa" class="hidden space-y-3">
                   <select id="cust-b2b-terms" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-brand-cyan outline-none bg-white">
                     <option value="credito_15d">Crédito a 15 días (Convenio Corporativo)</option>
-                    <option value="credito_30d">Crédito a 30 días (Grandes Cuentas)</option>
+                    <option value="credito_30d">Crédito a 30 días (Grandes Cuentas / Pipas)</option>
                     <option value="transferencia">Transferencia Electrónica (SPEI)</option>
                   </select>
 
                   <!-- INVOICE FIELDS -->
                   <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
                     <span class="font-bold text-brand-navy block"><i class="fa-solid fa-receipt mr-1"></i> Datos de Facturación CFDI:</span>
-                    <input type="text" id="cust-rfc" placeholder="RFC de la Empresa (12 o 13 carácteres)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 uppercase">
+                    <input type="text" id="cust-rfc" placeholder="RFC de la Empresa (12 o 13 caracteres)" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 uppercase">
                     <input type="text" id="cust-razon" placeholder="Razón Social completa" class="w-full px-3 py-1.5 rounded-lg border border-slate-300">
-                    <input type="email" id="cust-email" placeholder="Correo para envío de Factura PDF/XML" class="w-full px-3 py-1.5 rounded-lg border border-slate-300">
                   </div>
                 </div>
               </div>
 
-              <!-- SUBMIT BUTTON (1 CLIC) -->
-              <button type="submit" id="submit-order-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-cyan to-brand-blue hover:from-brand-blue hover:to-brand-navy text-white font-extrabold text-base shadow-lg shadow-brand-cyan/30 flex items-center justify-center transition active:scale-[0.98]">
-                <i class="fa-solid fa-paper-plane mr-2"></i> Confirmar Pedido en 1 Clic
+              <!-- SUBMIT BUTTON (DIRECT TO WHATSAPP 477-877-6369) -->
+              <button type="submit" id="submit-order-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-base shadow-lg shadow-emerald-500/30 flex items-center justify-center transition active:scale-[0.98]">
+                <i class="fa-brands fa-whatsapp text-xl mr-2"></i> Aperturar y Enviar a WhatsApp
               </button>
 
               <p class="text-[11px] text-center text-slate-400">
-                <i class="fa-solid fa-shield-halved text-emerald-500 mr-1"></i> Protección de datos éticos garantizada (USAG Ética & IA).
+                Se enviará directamente al número del equipo: <strong>477-877-6369</strong>
               </p>
             </form>
 
@@ -323,7 +321,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- TAB 2: RUTAS, REPARTIDORES & ASISTENTE IA DE REPROGRAMACIÓN -->
+    <!-- TAB 2: RUTAS, REPARTIDORES & ASIGNACIÓN DINÁMICA -->
     <!-- ================================================================= -->
     <section id="tab-repartidores" class="tab-content hidden space-y-8">
       
@@ -332,30 +330,33 @@
         <div>
           <h2 class="text-2xl font-extrabold text-brand-navy flex items-center">
             <i class="fa-solid fa-route text-brand-cyan mr-3"></i>
-            Hoja de Ruta Digital: León Norte
+            Hoja de Rutas & Repartidores: León, Gto.
           </h2>
-          <p class="text-sm text-slate-500">Unidad #01 · Repartidor asignado: Manuel Velázquez · Vehículo Placas: GTO-849-B</p>
+          <p class="text-sm text-slate-500">Unidad #01 (Manuel Velázquez) · Zona León Norte · Unidad Pipa Especial</p>
         </div>
         
         <!-- VEHICLE LOAD CAPACITY (LIMIT 50-60 GARRAFONES) -->
         <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl min-w-[280px]">
           <div class="flex justify-between items-center text-xs font-bold text-slate-700 mb-1.5">
-            <span>Carga del Vehículo (Límite: 60)</span>
+            <span>Carga Unidad #01 (Tope: 60)</span>
             <span id="load-count" class="text-brand-blue">42 / 60 Garrafones</span>
           </div>
           <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
             <div id="load-bar" class="bg-brand-cyan h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
           </div>
-          <span class="text-[11px] text-slate-500 mt-1 block">Capacidad operativa óptima para no forzar la unidad.</span>
+          <span class="text-[11px] text-slate-500 mt-1 block">Control físico para evitar sobrecargas y retrasos.</span>
         </div>
       </div>
 
       <!-- DISPATCH LIST & ORDERS IN ROUTE -->
       <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <div class="flex items-center justify-between">
-          <h3 class="text-lg font-bold text-slate-800">Paradas Programadas para Hoy</h3>
-          <span class="text-xs bg-brand-light text-brand-blue font-bold px-3 py-1 rounded-full">
-            Optimizada con Algoritmo de Proximidad
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h3 class="text-lg font-bold text-slate-800">Paradas Programadas para Hoy</h3>
+            <p class="text-xs text-slate-400">Los pedidos nuevos caen automáticamente en la ruta correspondiente a su colonia.</p>
+          </div>
+          <span class="text-xs bg-brand-light text-brand-blue font-bold px-3 py-1 rounded-full self-start">
+            Algoritmo de Ruteo Activo
           </span>
         </div>
 
@@ -363,8 +364,8 @@
           <table class="w-full text-left text-sm">
             <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-y border-slate-200">
               <tr>
-                <th class="py-3 px-4"># Orden</th>
-                <th class="py-3 px-4">Cliente / Tipo</th>
+                <th class="py-3 px-4"># Folio / Ruta</th>
+                <th class="py-3 px-4">Cliente</th>
                 <th class="py-3 px-4">Dirección</th>
                 <th class="py-3 px-4">Pedido</th>
                 <th class="py-3 px-4">Horario</th>
@@ -380,15 +381,23 @@
         </div>
       </div>
 
-      <!-- IA REPROGRAMMING NOTICE BANNER -->
-      <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-3xl p-6 shadow-md flex items-start space-x-4">
-        <div class="p-3 bg-white/10 rounded-2xl text-cyan-300 text-2xl">
-          <i class="fa-solid fa-robot"></i>
+      <!-- EXPLANATION OF HOW DRIVERS ARE NOTIFIED -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-blue-50 border border-blue-200 rounded-3xl p-5 text-xs text-blue-950 space-y-2">
+          <strong class="text-sm font-extrabold flex items-center text-brand-blue">
+            <i class="fa-solid fa-map-location-dot text-brand-cyan mr-2 text-base"></i> ¿Cómo cae el pedido en la ruta por zona?
+          </strong>
+          <p>
+            Cuando el cliente ingresa su dirección o pulsa <em>"Mi GPS"</em>, el sistema analiza la colonia (ej. Campestre, Jardines del Moral, Hidalgo) y clasifica si va a la <strong>Ruta 1 (León Norte)</strong> o si es un pedido de cisterna a la <strong>Ruta Especial Pipas</strong>, respetando la carga de 50-60 garrafones.
+          </p>
         </div>
-        <div class="flex-1">
-          <h4 class="font-extrabold text-lg text-cyan-200">Módulo de Reprogramación Proactiva con IA</h4>
-          <p class="text-sm text-slate-200 mt-1">
-            Si un cliente no es localizado en su domicilio, el sistema de IA no cancela el pedido: dispara una propuesta por WhatsApp ofreciendo dos nuevos horarios automáticos en la misma zona y alerta a <strong>Yessica Carmona (Filtro Humano)</strong> para garantizar que <em>ningún cliente se quede sin agua</em>.
+
+        <div class="bg-emerald-50 border border-emerald-200 rounded-3xl p-5 text-xs text-emerald-950 space-y-2">
+          <strong class="text-sm font-extrabold flex items-center text-emerald-800">
+            <i class="fa-brands fa-whatsapp text-emerald-600 mr-2 text-base"></i> ¿Cómo se le avisa al repartidor?
+          </strong>
+          <p>
+            Al pulsar el botón verde <strong>"Avisar"</strong> en la tabla, el sistema envía un mensaje directo al WhatsApp del repartidor (Manuel Velázquez) con el folio, productos, cobro y un enlace que abre <strong>Google Maps</strong> guiándolo directamente al domicilio del cliente.
           </p>
         </div>
       </div>
@@ -397,7 +406,116 @@
 
 
     <!-- ================================================================= -->
-    <!-- TAB 3: ESTADÍSTICAS, VENTAS & GRÁFICAS (DASHBOARD BI) -->
+    <!-- TAB 3: SIMULADOR DE BOT DE WHATSAPP (AUTO-RESPUESTAS CON IA) -->
+    <!-- ================================================================= -->
+    <section id="tab-bot-whatsapp" class="tab-content hidden space-y-8">
+      
+      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="max-w-2xl">
+          <span class="text-xs bg-white/20 text-emerald-200 font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            🤖 Inteligencia Artificial & Atención 24/7
+          </span>
+          <h2 class="text-3xl font-extrabold mt-2 mb-3">
+            Bot Oficial de WhatsApp & Auto-mensajes
+          </h2>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            Aquí puedes probar cómo responde el sistema automáticamente cuando el cliente envía su pedido al número <strong>477-877-6369</strong>, confirmando folio, horario y asignación de ruta en segundos.
+          </p>
+        </div>
+        <div class="bg-white/10 p-4 rounded-3xl backdrop-blur-md text-center border border-white/20">
+          <i class="fa-brands fa-whatsapp text-5xl text-emerald-300 mb-2"></i>
+          <span class="block text-xs font-bold text-white uppercase tracking-wider">Línea de Enlace</span>
+          <span class="text-base font-extrabold text-cyan-200">477-877-6369</span>
+        </div>
+      </div>
+
+      <!-- BOT SIMULATOR & SETUP GUIDE -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- INTERACTIVE CHAT WINDOW (LEFT 6 COLS) -->
+        <div class="lg:col-span-6 bg-slate-900 rounded-3xl p-4 shadow-xl border border-slate-800">
+          <div class="flex items-center justify-between pb-3 px-2 border-b border-slate-800 text-white">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white text-lg">
+                <i class="fa-solid fa-droplet"></i>
+              </div>
+              <div>
+                <strong class="block text-sm">Healthy Water · Bot IA</strong>
+                <span class="text-[11px] text-emerald-400">En línea · 477-877-6369</span>
+              </div>
+            </div>
+            <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">Simulador en vivo</span>
+          </div>
+
+          <!-- CHAT MESSAGES SCROLL -->
+          <div id="bot-chat-container" class="h-96 overflow-y-auto p-4 space-y-3 bg-slate-950/60 rounded-2xl my-3">
+            <div class="text-center my-2">
+              <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full">Hoy · Conversación Cifrada</span>
+            </div>
+
+            <!-- WELCOME BOT MESSAGE -->
+            <div class="flex justify-start mb-3">
+              <div class="bg-white text-slate-800 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-xs shadow-md border border-slate-200">
+                <div class="flex items-center space-x-1.5 text-brand-navy font-bold mb-1">
+                  <i class="fa-solid fa-robot text-brand-cyan"></i>
+                  <span>Bot Oficial Healthy Water</span>
+                </div>
+                <p class="leading-relaxed">
+                  💧 ¡Hola! Gracias por comunicarte con <strong>Healthy Water León</strong>.<br><br>
+                  Tu pedido ha sido recibido y registrado. Pasaremos en breve en tu turno acordado.<br><br>
+                  <em>Puedes escribir: "precio garrafon", "factura" o "pipa" para probar mis respuestas automáticas.</em>
+                </p>
+                <span class="text-[10px] text-slate-400 block text-right mt-1.5">12:00 · Entregado</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHAT INPUT -->
+          <div class="flex items-center space-x-2 pt-2">
+            <input type="text" id="bot-test-input" placeholder="Escribe un mensaje de prueba..." onkeypress="if(event.key==='Enter') sendInteractiveBotTest()" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 text-white text-xs border border-slate-700 outline-none focus:ring-2 focus:ring-emerald-500">
+            <button onclick="sendInteractiveBotTest()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- SETUP INSTRUCTIONS FOR WHATSAPP BUSINESS CELL PHONE (RIGHT 6 COLS) -->
+        <div class="lg:col-span-6 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center space-x-2 text-brand-navy font-extrabold text-lg">
+            <i class="fa-solid fa-gear text-brand-cyan"></i>
+            <h3>Cómo activar el Auto-mensaje en el celular (477-877-6369)</h3>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Para que la prueba física funcione al 100% cuando tus compañeros o el profesor manden un pedido desde la web, pueden configurar en 2 minutos su <strong>WhatsApp Business</strong> con este texto:
+          </p>
+
+          <div class="space-y-3 text-xs">
+            <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+              <strong class="text-slate-800 block mb-1">1. Ir a Herramientas para la empresa:</strong>
+              <span class="text-slate-600">Abre WhatsApp Business en el teléfono 477-877-6369 > Ajustes > Herramientas para la empresa > <strong>Mensaje de Bienvenida</strong>.</span>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+              <strong class="text-slate-800 block mb-1">2. Activar y pegar este mensaje:</strong>
+              <div class="p-3 bg-white rounded-xl border border-slate-300 font-mono text-[11px] text-slate-700 mt-1 select-all">
+                "💧 ¡Hola! Gracias por comunicarte con Purificadora Healthy Water en León. Hemos recibido los datos de tu pedido y ha sido canalizado a nuestra ruta de reparto. En unos instantes un miembro de nuestro equipo confirmará tu visita. ¡Que tengas un excelente día!"
+              </div>
+            </div>
+
+            <div class="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-900">
+              <strong class="block mb-1"><i class="fa-solid fa-user-check mr-1"></i> 3. Filtro Humano (Yessica Carmona):</strong>
+              <span>Cualquier caso especial, reprogramación o duda sobre facturas es atendido de inmediato por atención personalizada.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================================================= -->
+    <!-- TAB 4: ESTADÍSTICAS, VENTAS & GRÁFICAS (DASHBOARD BI) -->
     <!-- ================================================================= -->
     <section id="tab-dashboard" class="tab-content hidden space-y-8">
       
@@ -460,7 +578,7 @@
               <h3 class="font-extrabold text-lg text-slate-800">Ventas Diarias y Tendencia de Captación</h3>
               <p class="text-xs text-slate-400">Total en pesos ($ MXN) por día de la semana en la prueba piloto.</p>
             </div>
-            <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-bold">León Norte</span>
+            <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-bold">León Norte & Pipas</span>
           </div>
           <div class="h-72">
             <canvas id="salesChart"></canvas>
@@ -471,7 +589,7 @@
         <div class="lg:col-span-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
           <div>
             <h3 class="font-extrabold text-lg text-slate-800 mb-1">Distribución de Ingresos</h3>
-            <p class="text-xs text-slate-400 mb-4">Venta de Contado (Hogares) vs Crédito (Empresas)</p>
+            <p class="text-xs text-slate-400 mb-4">Venta de Contado (Hogares) vs Crédito (Empresas/Pipas)</p>
             <div class="h-56">
               <canvas id="mixChart"></canvas>
             </div>
@@ -479,11 +597,11 @@
           <div class="pt-4 border-t border-slate-100 text-xs space-y-1 text-slate-500">
             <div class="flex justify-between">
               <span>Efectivo cobrado en ruta:</span>
-              <strong class="text-slate-700">65%</strong>
+              <strong class="text-slate-700">60%</strong>
             </div>
             <div class="flex justify-between">
-              <span>Créditos comerciales B2B:</span>
-              <strong class="text-amber-600">35%</strong>
+              <span>Créditos & Facturas B2B:</span>
+              <strong class="text-amber-600">40%</strong>
             </div>
           </div>
         </div>
@@ -528,129 +646,96 @@
 
 
     <!-- ================================================================= -->
-    <!-- TAB 4: MARKETING, VIDEO PUBLICITARIO & NIÑOS -->
+    <!-- TAB 5: VIDEO PUBLICITARIO LUMA IA & MARKETING -->
     <!-- ================================================================= -->
     <section id="tab-marketing" class="tab-content hidden space-y-8">
       
       <div class="bg-gradient-to-r from-brand-navy to-brand-blue text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="max-w-2xl">
           <span class="text-xs bg-white/20 text-cyan-200 font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-            🎬 Estrategia de Mercadotecnia Audiovisual
+            🎬 Video Promocional con Luma IA & Redes Sociales
           </span>
           <h2 class="text-3xl font-extrabold mt-2 mb-3">
             "La Pureza que Cuida a Quienes Más Amas"
           </h2>
           <p class="text-slate-200 text-sm leading-relaxed">
-            Campaña diseñada para redes sociales (TikTok, Reels e Historias de WhatsApp) que vincula la ternura y vitalidad de los niños con la pureza certificada de <strong>Healthy Water</strong>, abriendo la captación familiar y convenios con empresas.
+            Aquí pueden reproducir su video generado con <strong>Luma IA</strong>, combinando las fotos de los niños con la tecnología de captación en 1 clic y los pedidos por WhatsApp.
           </p>
         </div>
         <img src="assets/logo.png" alt="Healthy Water" class="h-24 bg-white/95 p-3 rounded-2xl shadow-lg">
       </div>
 
-      <!-- MULTIMEDIA SHOWCASE & STORYBOARD -->
+      <!-- VIDEO PLAYER & INTEGRATION -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- VISUAL ASSETS OF THE CAMPAIGN (PHOTOS OF THE CHILDREN) -->
-        <div class="lg:col-span-5 space-y-4">
-          <h3 class="font-extrabold text-lg text-slate-800 flex items-center">
-            <i class="fa-solid fa-camera-retro text-brand-cyan mr-2"></i>
-            Material Visual de Campaña
-          </h3>
+        <!-- LUMA AI VIDEO CONTAINER (LEFT 6 COLS) -->
+        <div class="lg:col-span-6 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-extrabold text-lg text-slate-800 flex items-center">
+              <i class="fa-solid fa-play text-brand-cyan mr-2"></i>
+              Reproductor del Video (Luma IA)
+            </h3>
+            <span class="text-xs bg-brand-light text-brand-blue font-bold px-2.5 py-1 rounded-full">Formato 9:16</span>
+          </div>
 
-          <!-- CARD PHOTO 1: EL NIÑO JUGANDO -->
-          <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm overflow-hidden">
-            <div class="relative rounded-2xl overflow-hidden aspect-[4/5] bg-slate-100">
-              <img src="assets/foto_campana_2.jpg" alt="Niño con energía en el parque" class="w-full h-full object-cover">
-              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white text-xs">
-                <span class="bg-brand-cyan text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Toma 1: Vitalidad & Crecimiento</span>
-                <p class="font-bold text-sm mt-1">"Energía y Salud en Cada Gota"</p>
-                <p class="text-slate-300 text-[11px]">Encuadre inicial: El niño jugando lleno de vitalidad y bienestar.</p>
+          <!-- VIDEO PLAYER FRAME -->
+          <div class="relative rounded-2xl overflow-hidden aspect-[9/16] max-h-[520px] mx-auto bg-slate-900 flex items-center justify-center border border-slate-300">
+            <video id="luma-video-player" controls class="w-full h-full object-cover hidden"></video>
+            
+            <div id="video-placeholder" class="text-center p-6 text-white space-y-4">
+              <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center text-3xl mx-auto text-cyan-300">
+                <i class="fa-solid fa-clapperboard"></i>
               </div>
+              <div>
+                <strong class="block text-base">Carga tu Video de Luma IA aquí</strong>
+                <p class="text-xs text-slate-300 mt-1">Selecciona el archivo <strong>.mp4</strong> descargado de Luma IA para reproducirlo al instante en la página.</p>
+              </div>
+              <label class="cursor-pointer inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-brand-cyan hover:bg-brand-blue text-white text-xs font-bold transition shadow-md">
+                <i class="fa-solid fa-upload"></i>
+                <span>Seleccionar video (.mp4)</span>
+                <input type="file" id="luma-video-file-input" accept="video/mp4,video/*" class="hidden">
+              </label>
             </div>
           </div>
 
-          <!-- CARD PHOTO 2: LOS HERMANITOS Y EL BEBÉ -->
-          <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm overflow-hidden">
-            <div class="relative rounded-2xl overflow-hidden aspect-[4/5] bg-slate-100">
-              <img src="assets/foto_campana_1.jpg" alt="Hermanitos y el bebé con mameluco" class="w-full h-full object-cover">
-              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white text-xs">
-                <span class="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Toma 2: Ternura & Protección</span>
-                <p class="font-bold text-sm mt-1">"100% Agua Purificada y Segura"</p>
-                <p class="text-slate-300 text-[11px]">Encuadre emotivo: La inocencia del bebé y el cuidado de los que amas.</p>
-              </div>
-            </div>
-          </div>
-
+          <p class="text-[11px] text-slate-400 text-center">
+            Tip: También pueden guardar el archivo como <code>assets/video_luma.mp4</code> para que se cargue permanentemente.
+          </p>
         </div>
 
-        <!-- FULL SCRIPT & TIMELINE (RIGHT 7 COLS) -->
-        <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+        <!-- STORYBOARD & PRODUCTION DETAILS (RIGHT 6 COLS) -->
+        <div class="lg:col-span-6 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div class="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <h3 class="font-extrabold text-xl text-brand-navy">Guion Técnico para Redes Sociales</h3>
-              <p class="text-xs text-slate-500">Duración: 35 segundos · Formato Vertical 9:16 (TikTok, Reels, Shorts)</p>
+              <h3 class="font-extrabold text-xl text-brand-navy">Guion Técnico y Locución</h3>
+              <p class="text-xs text-slate-500">Duración: 35 segundos · TikTok, Reels y WhatsApp</p>
             </div>
             <button onclick="playMockVoiceover()" id="play-audio-btn" class="px-4 py-2 bg-brand-cyan hover:bg-brand-blue text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm">
               <i class="fa-solid fa-volume-high mr-1.5"></i> Escuchar Locución
             </button>
           </div>
 
-          <!-- TIMELINE OF SCENES -->
-          <div class="space-y-4">
-            
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
-                <span>00:00 - 00:06 · Escena 1 (Gancho Emocional)</span>
-                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Parque</span>
-              </div>
-              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> El niño pequeño jugando con su estrellita en la frente, sonriendo con energía en el tobogán.</p>
-              <p class="text-sm text-slate-800 italic">"Verlos crecer sanos, activos y felices es lo que más nos importa a todos..."</p>
+          <!-- VISUAL ELEMENTS USED -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-xl overflow-hidden border border-slate-200 aspect-[4/3] relative">
+              <img src="assets/foto_campana_2.jpg" alt="Niño jugando" class="w-full h-full object-cover">
+              <span class="absolute bottom-1 left-1 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded">Toma 1: Vitalidad</span>
             </div>
-
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
-                <span>00:07 - 00:14 · Escena 2 (Cuidado Familiar)</span>
-                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Hermanitos</span>
-              </div>
-              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> El hermanito mayor abrazando al bebé, mirando con ternura a la cámara.</p>
-              <p class="text-sm text-slate-800 italic">"...por eso en casa no te conformas con cualquier agua. Exiges la máxima pureza."</p>
+            <div class="rounded-xl overflow-hidden border border-slate-200 aspect-[4/3] relative">
+              <img src="assets/foto_campana_1.jpg" alt="Hermanitos con bebé" class="w-full h-full object-cover">
+              <span class="absolute bottom-1 left-1 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded">Toma 2: Cuidado</span>
             </div>
-
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
-                <span>00:15 - 00:21 · Escena 3 (Marca & Calidad)</span>
-                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Producto</span>
-              </div>
-              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> El logotipo de Healthy Water con un vaso de agua cristalina sirviéndose con pureza.</p>
-              <p class="text-sm text-slate-800 italic">"Healthy Water: microfiltrada y purificada con la más alta tecnología para cuidar a quienes más amas."</p>
-            </div>
-
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
-                <span>00:22 - 00:28 · Escena 4 (Canal Hogar & Empresas)</span>
-                <span class="bg-blue-100 px-2 py-0.5 rounded-full">Toma Pedido 1 Clic</span>
-              </div>
-              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> Teléfono haciendo el pedido en 1 clic y oficina en León recibiendo sus garrafones con factura.</p>
-              <p class="text-sm text-slate-800 italic">"Pide en un clic desde tu celular. Pago en efectivo para tu hogar, o con crédito y facturación inmediata para tu empresa."</p>
-            </div>
-
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="flex items-center justify-between text-xs font-bold text-brand-blue mb-1">
-                <span>00:29 - 00:35 · Escena 5 (Llamado a la Acción CTA)</span>
-                <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Cierre</span>
-              </div>
-              <p class="text-xs text-slate-600 mb-1"><strong>Visual:</strong> Logotipo completo, botón de WhatsApp y enlace a la página web.</p>
-              <p class="text-sm text-slate-800 italic">"Healthy Water. Tu agua de siempre, ahora a un solo clic de distancia. ¡Haz tu pedido hoy!"</p>
-            </div>
-
           </div>
 
-          <!-- DOWNLOAD MARKETING KIT -->
-          <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
-            <span class="text-xs text-slate-500 font-medium">Kit de Publicación preparado para Edgar Robledo (Mercadotecnia).</span>
-            <button onclick="alert('El guion técnico y los recursos gráficos están listos para ser exportados a CapCut / Premiere.')" class="px-4 py-2 border border-slate-300 hover:bg-slate-50 rounded-xl text-xs font-bold text-slate-700 transition">
-              <i class="fa-solid fa-file-arrow-down mr-1"></i> Exportar Ficha Publicitaria
-            </button>
+          <!-- INSTRUCTIONS TO INTEGRATE THE WEB SCREEN RECORDING INTO THE VIDEO -->
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2">
+            <strong class="text-brand-blue block text-sm"><i class="fa-solid fa-film mr-1"></i> Cómo agregar la grabación de la página al video:</strong>
+            <ol class="list-decimal list-inside space-y-1 text-slate-600">
+              <li>Abre en tu celular la página web oficial en GitHub: <code>https://margaritaanda-sys.github.io/healthy-water/</code>.</li>
+              <li>Activa la <em>Grabación de pantalla</em> de tu celular y haz clic en agregar 2 garrafones y enviar a WhatsApp.</li>
+              <li>Abre <strong>CapCut</strong> (o Canva), coloca de inicio el video de Luma IA de los niños (0-15s) y después inserta la grabación de la pantalla (15-28s).</li>
+              <li>Termina con el logo y el número <strong>477-877-6369</strong>. ¡El resultado final será de nivel profesional!</li>
+            </ol>
           </div>
 
         </div>
@@ -696,7 +781,7 @@
         </div>
 
         <div class="p-3 bg-blue-50 rounded-2xl border border-blue-200 text-blue-900 text-xs">
-          <strong>Filtro Humano Activo:</strong> Supervisado por <em>Yessica Carmona (Atención y Pruebas)</em> para mantener empatía y confianza con el cliente.
+          <strong>Filtro Humano Activo:</strong> Supervisado por <em>Yessica Carmona (Atención y Pruebas)</em> para garantizar que ningún cliente se quede sin agua.
         </div>
       </div>
 
@@ -705,7 +790,7 @@
           Cancelar
         </button>
         <button onclick="confirmAiReschedule()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition flex items-center">
-          <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i> Enviar Propuesta por WhatsApp
+          <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i> Enviar a 477-877-6369
         </button>
       </div>
 
@@ -724,7 +809,7 @@
 
       <h3 class="text-2xl font-extrabold text-slate-800 mb-2">¡Pedido Aperturado con Éxito!</h3>
       <p class="text-xs text-slate-500 mb-4 leading-relaxed">
-        Tu pedido ha sido registrado en la base de datos de <strong>Healthy Water</strong> y vinculado a la ruta de entrega de León Norte.
+        Tu pedido ha sido procesado y vinculado automáticamente a la ruta correspondiente en León, Gto.
       </p>
 
       <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2 mb-6">
@@ -737,21 +822,29 @@
           <strong id="modal-name">Gabriela Campuzano</strong>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-500">Horario acordado:</span>
-          <strong id="modal-horario" class="text-brand-blue">9:00 - 12:00</strong>
+          <span class="text-slate-500">Ruta Asignada:</span>
+          <strong id="modal-route" class="text-brand-blue">Ruta 1 (León Norte)</strong>
         </div>
         <div class="flex justify-between">
+          <span class="text-slate-500">Repartidor Asignado:</span>
+          <strong id="modal-driver" class="text-slate-700">Manuel Velázquez</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Horario acordado:</span>
+          <strong id="modal-horario" class="text-slate-800">9:00 - 12:00</strong>
+        </div>
+        <div class="flex justify-between border-t border-slate-200 pt-1.5">
           <span class="text-slate-500">Total a pagar:</span>
-          <strong id="modal-total" class="text-emerald-700 font-extrabold">$90.00 MXN</strong>
+          <strong id="modal-total" class="text-emerald-700 font-extrabold text-sm">$30.00 MXN</strong>
         </div>
       </div>
 
       <div class="space-y-2">
         <a id="modal-whatsapp-link" href="#" target="_blank" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-bold shadow-md flex items-center justify-center transition">
-          <i class="fa-brands fa-whatsapp text-base mr-2"></i> Abrir Confirmación en WhatsApp
+          <i class="fa-brands fa-whatsapp text-base mr-2"></i> Abrir WhatsApp (477-877-6369)
         </a>
         <button onclick="closeSuccessModal()" class="w-full py-2.5 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition">
-          Cerrar y ver estado de ruta
+          Ver Hoja de Ruta & Repartidores
         </button>
       </div>
 
@@ -765,7 +858,7 @@
         <img src="assets/logo.png" alt="Healthy Water" class="h-10 w-auto bg-white/90 p-1.5 rounded-lg">
         <div>
           <strong class="text-white block">Purificadora Healthy Water · León, Guanajuato</strong>
-          <span>Optimización de servicio con Inteligencia Artificial & Supabase</span>
+          <span>Teléfono WhatsApp: 477-877-6369 · Optimización con IA y Supabase</span>
         </div>
       </div>
       <div class="text-center sm:text-right text-[11px]">
