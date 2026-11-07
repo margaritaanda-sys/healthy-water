@@ -217,10 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================================================
-// TAB NAVIGATION
+// TAB NAVIGATION (APP 1 - TIENDA COMERCIAL CLIENTES)
 // ============================================================================
 function switchTab(tabId) {
-  const tabs = ['pedidos', 'repartidores', 'dashboard', 'marketing', 'bot-whatsapp'];
+  const tabs = ['pedidos', 'bot-whatsapp', 'marketing'];
   
   tabs.forEach(t => {
     const section = document.getElementById(`tab-${t}`);
@@ -249,10 +249,6 @@ function switchTab(tabId) {
       }
     }
   });
-
-  if (tabId === 'dashboard') {
-    setTimeout(updateChartsData, 100);
-  }
 }
 
 // ============================================================================
@@ -747,7 +743,7 @@ function handlePlaceOrder(e) {
 
 function closeSuccessModal() {
   document.getElementById('order-success-modal').classList.add('hidden');
-  switchTab('repartidores');
+  switchTab('pedidos');
 }
 
 // ============================================================================

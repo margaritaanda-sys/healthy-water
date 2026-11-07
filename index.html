@@ -58,22 +58,16 @@
         </div>
       </div>
 
-      <!-- NAV TABS -->
+      <!-- NAV TABS (COMERCIALES / CLIENTES) -->
       <nav class="hidden md:flex space-x-1 lg:space-x-2">
-        <button onclick="switchTab('pedidos')" id="tab-btn-pedidos" class="nav-tab active-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
-          <i class="fa-solid fa-bottle-water mr-1"></i> Pedir Agua (1 Clic)
+        <button onclick="switchTab('pedidos')" id="tab-btn-pedidos" class="nav-tab active-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-solid fa-bottle-water mr-1.5 text-brand-cyan"></i> Pedir Agua (1 Clic)
         </button>
-        <button onclick="switchTab('repartidores')" id="tab-btn-repartidores" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
-          <i class="fa-solid fa-truck mr-1"></i> Rutas & Reparto
+        <button onclick="switchTab('bot-whatsapp')" id="tab-btn-bot-whatsapp" class="nav-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-brands fa-whatsapp text-emerald-500 mr-1.5"></i> Preguntas & Asistente IA
         </button>
-        <button onclick="switchTab('bot-whatsapp')" id="tab-btn-bot-whatsapp" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
-          <i class="fa-brands fa-whatsapp text-emerald-500 mr-1"></i> Bot de Auto-respuesta
-        </button>
-        <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
-          <i class="fa-solid fa-chart-line mr-1"></i> Estadísticas
-        </button>
-        <button onclick="switchTab('marketing')" id="tab-btn-marketing" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
-          <i class="fa-solid fa-clapperboard mr-1"></i> Video Luma IA
+        <button onclick="switchTab('marketing')" id="tab-btn-marketing" class="nav-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">
+          <i class="fa-solid fa-clapperboard mr-1.5 text-brand-blue"></i> Campaña & Video Luma
         </button>
       </nav>
 
@@ -94,9 +88,7 @@
     <!-- MOBILE NAVIGATION (SCROLLABLE) -->
     <div class="md:hidden flex overflow-x-auto px-4 py-2 space-x-2 border-t border-slate-100 bg-slate-50 text-xs">
       <button onclick="switchTab('pedidos')" id="mob-tab-pedidos" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold bg-brand-cyan text-white">Pedir (1 Clic)</button>
-      <button onclick="switchTab('repartidores')" id="mob-tab-repartidores" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Rutas</button>
-      <button onclick="switchTab('bot-whatsapp')" id="mob-tab-bot-whatsapp" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Bot WhatsApp</button>
-      <button onclick="switchTab('dashboard')" id="mob-tab-dashboard" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Estadísticas</button>
+      <button onclick="switchTab('bot-whatsapp')" id="mob-tab-bot-whatsapp" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Preguntas & Asistente</button>
       <button onclick="switchTab('marketing')" id="mob-tab-marketing" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold text-slate-600">Video Luma</button>
       <a href="admin.html" class="whitespace-nowrap px-3 py-1.5 rounded-lg font-bold bg-brand-navy text-white flex items-center border border-brand-cyan/40">
         <i class="fa-solid fa-shield-halved text-brand-cyan mr-1"></i> Admin (Clerk)
@@ -383,92 +375,7 @@
 
 
     <!-- ================================================================= -->
-    <!-- TAB 2: RUTAS, REPARTIDORES & ASIGNACIÓN DINÁMICA -->
-    <!-- ================================================================= -->
-    <section id="tab-repartidores" class="tab-content hidden space-y-8">
-      
-      <!-- HEADER OF ROUTE DISPATCH -->
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-        <div>
-          <h2 class="text-2xl font-extrabold text-brand-navy flex items-center">
-            <i class="fa-solid fa-route text-brand-cyan mr-3"></i>
-            Hoja de Rutas & Repartidores: León, Gto.
-          </h2>
-          <p class="text-sm text-slate-500">Unidad #01 (Manuel Velázquez) · Zona León Norte · Unidad Pipa Especial</p>
-        </div>
-        
-        <!-- VEHICLE LOAD CAPACITY (LIMIT 50-60 GARRAFONES) -->
-        <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl min-w-[280px]">
-          <div class="flex justify-between items-center text-xs font-bold text-slate-700 mb-1.5">
-            <span>Carga Unidad #01 (Tope: 60)</span>
-            <span id="load-count" class="text-brand-blue">42 / 60 Garrafones</span>
-          </div>
-          <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
-            <div id="load-bar" class="bg-brand-cyan h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
-          </div>
-          <span class="text-[11px] text-slate-500 mt-1 block">Control físico para evitar sobrecargas y retrasos.</span>
-        </div>
-      </div>
-
-      <!-- DISPATCH LIST & ORDERS IN ROUTE -->
-      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div>
-            <h3 class="text-lg font-bold text-slate-800">Paradas Programadas para Hoy</h3>
-            <p class="text-xs text-slate-400">Los pedidos nuevos caen automáticamente en la ruta correspondiente a su colonia.</p>
-          </div>
-          <span class="text-xs bg-brand-light text-brand-blue font-bold px-3 py-1 rounded-full self-start">
-            Algoritmo de Ruteo Activo
-          </span>
-        </div>
-
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-y border-slate-200">
-              <tr>
-                <th class="py-3 px-4"># Folio / Ruta</th>
-                <th class="py-3 px-4">Cliente</th>
-                <th class="py-3 px-4">Dirección</th>
-                <th class="py-3 px-4">Pedido</th>
-                <th class="py-3 px-4">Horario</th>
-                <th class="py-3 px-4">Cobro</th>
-                <th class="py-3 px-4">Estado</th>
-                <th class="py-3 px-4 text-center">Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="routes-table-body" class="divide-y divide-slate-100">
-              <!-- Dynamically rendered rows by JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- EXPLANATION OF HOW DRIVERS ARE NOTIFIED -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-blue-50 border border-blue-200 rounded-3xl p-5 text-xs text-blue-950 space-y-2">
-          <strong class="text-sm font-extrabold flex items-center text-brand-blue">
-            <i class="fa-solid fa-map-location-dot text-brand-cyan mr-2 text-base"></i> ¿Cómo cae el pedido en la ruta por zona?
-          </strong>
-          <p>
-            Cuando el cliente ingresa su dirección o pulsa <em>"Mi GPS"</em>, el sistema analiza la colonia (ej. Campestre, Jardines del Moral, Hidalgo) y clasifica si va a la <strong>Ruta 1 (León Norte)</strong> o si es un pedido de cisterna a la <strong>Ruta Especial Pipas</strong>, respetando la carga de 50-60 garrafones.
-          </p>
-        </div>
-
-        <div class="bg-emerald-50 border border-emerald-200 rounded-3xl p-5 text-xs text-emerald-950 space-y-2">
-          <strong class="text-sm font-extrabold flex items-center text-emerald-800">
-            <i class="fa-brands fa-whatsapp text-emerald-600 mr-2 text-base"></i> ¿Cómo se le avisa al repartidor?
-          </strong>
-          <p>
-            Al pulsar el botón verde <strong>"Avisar"</strong> en la tabla, el sistema envía un mensaje directo al WhatsApp del repartidor (Manuel Velázquez) con el folio, productos, cobro y un enlace que abre <strong>Google Maps</strong> guiándolo directamente al domicilio del cliente.
-          </p>
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- ================================================================= -->
-    <!-- TAB 3: SIMULADOR DE BOT DE WHATSAPP (AUTO-RESPUESTAS CON IA) -->
+    <!-- PREGUNTAS FRECUENTES & ASISTENTE VIRTUAL WHATSAPP 24/7 -->
     <!-- ================================================================= -->
     <section id="tab-bot-whatsapp" class="tab-content hidden space-y-8">
       
@@ -478,20 +385,20 @@
             🤖 Inteligencia Artificial & Atención 24/7
           </span>
           <h2 class="text-3xl font-extrabold mt-2 mb-3">
-            Bot Oficial de WhatsApp & Auto-mensajes
+            Preguntas Frecuentes & Asistente Virtual
           </h2>
           <p class="text-slate-200 text-sm leading-relaxed">
-            Aquí puedes probar cómo responde el sistema automáticamente cuando el cliente envía su pedido al número <strong>477-877-6369</strong>, confirmando folio, horario y asignación de ruta en segundos.
+            Resuelve tus dudas sobre precios, horarios de entrega en León Norte y cobertura para pedidos domésticos o de pipas. Puedes escribir en el chat interactivo o enviarnos mensaje directo al <strong>477-877-6369</strong>.
           </p>
         </div>
         <div class="bg-white/10 p-4 rounded-3xl backdrop-blur-md text-center border border-white/20">
           <i class="fa-brands fa-whatsapp text-5xl text-emerald-300 mb-2"></i>
-          <span class="block text-xs font-bold text-white uppercase tracking-wider">Línea de Enlace</span>
+          <span class="block text-xs font-bold text-white uppercase tracking-wider">Atención WhatsApp</span>
           <span class="text-base font-extrabold text-cyan-200">477-877-6369</span>
         </div>
       </div>
 
-      <!-- BOT SIMULATOR & SETUP GUIDE -->
+      <!-- BOT SIMULATOR & CUSTOMER FAQS -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- INTERACTIVE CHAT WINDOW (LEFT 6 COLS) -->
@@ -502,17 +409,17 @@
                 <i class="fa-solid fa-droplet"></i>
               </div>
               <div>
-                <strong class="block text-sm">Healthy Water · Bot IA</strong>
+                <strong class="block text-sm">Healthy Water · Asistente IA</strong>
                 <span class="text-[11px] text-emerald-400">En línea · 477-877-6369</span>
               </div>
             </div>
-            <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">Simulador en vivo</span>
+            <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">Chat en Vivo</span>
           </div>
 
           <!-- CHAT MESSAGES SCROLL -->
           <div id="bot-chat-container" class="h-96 overflow-y-auto p-4 space-y-3 bg-slate-950/60 rounded-2xl my-3">
             <div class="text-center my-2">
-              <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full">Hoy · Conversación Cifrada</span>
+              <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full">Hoy · Conversación Segura</span>
             </div>
 
             <!-- WELCOME BOT MESSAGE -->
@@ -520,53 +427,56 @@
               <div class="bg-white text-slate-800 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-xs shadow-md border border-slate-200">
                 <div class="flex items-center space-x-1.5 text-brand-navy font-bold mb-1">
                   <i class="fa-solid fa-robot text-brand-cyan"></i>
-                  <span>Bot Oficial Healthy Water</span>
+                  <span>Asistente Oficial Healthy Water</span>
                 </div>
                 <p class="leading-relaxed">
                   💧 ¡Hola! Gracias por comunicarte con <strong>Healthy Water León</strong>.<br><br>
-                  Tu pedido ha sido recibido y registrado. Pasaremos en breve en tu turno acordado.<br><br>
-                  <em>Puedes escribir: "precio garrafon", "factura" o "pipa" para probar mis respuestas automáticas.</em>
+                  ¿En qué podemos ayudarte hoy?<br><br>
+                  <em>Puedes escribir: "precio garrafon", "horarios", "formas de pago" o "pipa" para probar mis respuestas automáticas.</em>
                 </p>
-                <span class="text-[10px] text-slate-400 block text-right mt-1.5">12:00 · Entregado</span>
+                <span class="text-[10px] text-slate-400 block text-right mt-1.5">12:00 · En línea</span>
               </div>
             </div>
           </div>
 
           <!-- CHAT INPUT -->
           <div class="flex items-center space-x-2 pt-2">
-            <input type="text" id="bot-test-input" placeholder="Escribe un mensaje de prueba..." onkeypress="if(event.key==='Enter') sendInteractiveBotTest()" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 text-white text-xs border border-slate-700 outline-none focus:ring-2 focus:ring-emerald-500">
+            <input type="text" id="bot-test-input" placeholder="Pregunta sobre precios, horarios o pipas..." onkeypress="if(event.key==='Enter') sendInteractiveBotTest()" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 text-white text-xs border border-slate-700 outline-none focus:ring-2 focus:ring-emerald-500">
             <button onclick="sendInteractiveBotTest()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
               <i class="fa-solid fa-paper-plane"></i>
             </button>
           </div>
         </div>
 
-        <!-- SETUP INSTRUCTIONS FOR WHATSAPP BUSINESS CELL PHONE (RIGHT 6 COLS) -->
+        <!-- CUSTOMER FAQS & SERVICE COVERAGE (RIGHT 6 COLS) -->
         <div class="lg:col-span-6 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-sm space-y-4">
           <div class="flex items-center space-x-2 text-brand-navy font-extrabold text-lg">
-            <i class="fa-solid fa-gear text-brand-cyan"></i>
-            <h3>Cómo activar el Auto-mensaje en el celular (477-877-6369)</h3>
+            <i class="fa-solid fa-circle-question text-brand-cyan"></i>
+            <h3>Preguntas Frecuentes de Clientes</h3>
           </div>
           <p class="text-xs text-slate-600 leading-relaxed">
-            Para que la prueba física funcione al 100% cuando tus compañeros o el profesor manden un pedido desde la web, pueden configurar en 2 minutos su <strong>WhatsApp Business</strong> con este texto:
+            Información rápida y clara sobre nuestro servicio de purificación y entrega a domicilio:
           </p>
 
           <div class="space-y-3 text-xs">
             <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
-              <strong class="text-slate-800 block mb-1">1. Ir a Herramientas para la empresa:</strong>
-              <span class="text-slate-600">Abre WhatsApp Business en el teléfono 477-877-6369 > Ajustes > Herramientas para la empresa > <strong>Mensaje de Bienvenida</strong>.</span>
+              <strong class="text-brand-navy block mb-1"><i class="fa-solid fa-truck text-brand-cyan mr-1.5"></i> ¿En qué zonas de León tienen entrega a domicilio?</strong>
+              <span class="text-slate-600">Cubrimos principalmente la Zona Norte de León (Valle del Campestre, Jardines del Moral, Gran Jardín, Hidalgo y colonias aledañas). La entrega a domicilio está 100% incluida en tu pedido.</span>
             </div>
 
             <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
-              <strong class="text-slate-800 block mb-1">2. Activar y pegar este mensaje:</strong>
-              <div class="p-3 bg-white rounded-xl border border-slate-300 font-mono text-[11px] text-slate-700 mt-1 select-all">
-                "💧 ¡Hola! Gracias por comunicarte con Purificadora Healthy Water en León. Hemos recibido los datos de tu pedido y ha sido canalizado a nuestra ruta de reparto. En unos instantes un miembro de nuestro equipo confirmará tu visita. ¡Que tengas un excelente día!"
-              </div>
+              <strong class="text-brand-navy block mb-1"><i class="fa-solid fa-credit-card text-emerald-600 mr-1.5"></i> ¿Por qué conviene pagar en línea con tarjeta o SPEI?</strong>
+              <span class="text-slate-600">Al pagar en línea tu entrega queda 100% garantizada. Si tuviste que salir de casa, el chofer tiene indicación formal de dejar tus garrafones en tu puerta, caseta o vigilancia con total seguridad.</span>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+              <strong class="text-brand-navy block mb-1"><i class="fa-solid fa-truck-droplet text-blue-600 mr-1.5"></i> ¿Tienen servicio de Pipas para empresas o residencias?</strong>
+              <span class="text-slate-600">Sí, abastecemos cisternas de residencias, constructoras y empresas en León con <strong>Media Pipa (5,000L a $600 MXN)</strong> o <strong>Pipa Completa (10,000L a $900 MXN)</strong> con facturación CFDI.</span>
             </div>
 
             <div class="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-900">
-              <strong class="block mb-1"><i class="fa-solid fa-user-check mr-1"></i> 3. Filtro Humano (Yessica Carmona):</strong>
-              <span>Cualquier caso especial, reprogramación o duda sobre facturas es atendido de inmediato por atención personalizada.</span>
+              <strong class="block mb-1"><i class="fa-brands fa-whatsapp text-emerald-700 mr-1.5 text-base"></i> ¿Deseas atención personalizada inmediata?</strong>
+              <span>Escríbenos directamente a nuestro WhatsApp oficial: <strong>477-877-6369</strong>. Nuestro equipo humano en planta te responderá de inmediato.</span>
             </div>
           </div>
         </div>
@@ -577,151 +487,20 @@
 
 
     <!-- ================================================================= -->
-    <!-- TAB 4: ESTADÍSTICAS, VENTAS & GRÁFICAS (DASHBOARD BI) -->
-    <!-- ================================================================= -->
-    <section id="tab-dashboard" class="tab-content hidden space-y-8">
-      
-      <!-- TOP METRIC CARDS -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        
-        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-hand-holding-dollar"></i>
-          </div>
-          <div>
-            <span class="text-xs text-slate-500 font-semibold uppercase">Ventas de Hoy</span>
-            <h4 id="stat-ventas-hoy" class="text-2xl font-extrabold text-slate-800">$2,475 MXN</h4>
-            <span class="text-[11px] text-emerald-600 font-bold"><i class="fa-solid fa-arrow-trend-up mr-0.5"></i> +18% vs ayer</span>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
-          <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-brand-cyan flex items-center justify-center text-xl">
-            <i class="fa-solid fa-droplet"></i>
-          </div>
-          <div>
-            <span class="text-xs text-slate-500 font-semibold uppercase">Garrafones Entregados</span>
-            <h4 id="stat-garrafones-hoy" class="text-2xl font-extrabold text-slate-800">55 Unidades</h4>
-            <span class="text-[11px] text-brand-blue font-bold">Capacidad 92% cubierta</span>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
-          <div class="w-12 h-12 rounded-2xl bg-blue-100 text-brand-blue flex items-center justify-center text-xl">
-            <i class="fa-solid fa-user-plus"></i>
-          </div>
-          <div>
-            <span class="text-xs text-slate-500 font-semibold uppercase">Nuevos Clientes Web</span>
-            <h4 id="stat-clientes-nuevos" class="text-2xl font-extrabold text-slate-800">14 Registros</h4>
-            <span class="text-[11px] text-emerald-600 font-bold">Captación en 1 clic</span>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex items-center space-x-4">
-          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-calendar-check"></i>
-          </div>
-          <div>
-            <span class="text-xs text-slate-500 font-semibold uppercase">Efectividad de Entrega</span>
-            <h4 id="stat-efectividad" class="text-2xl font-extrabold text-slate-800">96.5%</h4>
-            <span class="text-[11px] text-slate-500 font-bold">2 reprogramados por IA</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- CHARTS SECTION -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- CHART 1: SALES BY DAY -->
-        <div class="lg:col-span-8 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h3 class="font-extrabold text-lg text-slate-800">Ventas Diarias y Tendencia de Captación</h3>
-              <p class="text-xs text-slate-400">Total en pesos ($ MXN) por día de la semana en la prueba piloto.</p>
-            </div>
-            <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-bold">León Norte & Pipas</span>
-          </div>
-          <div class="h-72">
-            <canvas id="salesChart"></canvas>
-          </div>
-        </div>
-
-        <!-- CHART 2: REVENUE MIX (HOGAR VS EMPRESA) -->
-        <div class="lg:col-span-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
-          <div>
-            <h3 class="font-extrabold text-lg text-slate-800 mb-1">Distribución de Ingresos</h3>
-            <p class="text-xs text-slate-400 mb-4">Venta de Contado (Hogares) vs Crédito (Empresas/Pipas)</p>
-            <div class="h-56">
-              <canvas id="mixChart"></canvas>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-slate-100 text-xs space-y-1 text-slate-500">
-            <div class="flex justify-between">
-              <span>Efectivo cobrado en ruta:</span>
-              <strong class="text-slate-700">60%</strong>
-            </div>
-            <div class="flex justify-between">
-              <span>Créditos & Facturas B2B:</span>
-              <strong class="text-amber-600">40%</strong>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- TEAM ROLES ACCORDION (USAG PROYECTO MAESTRÍA) -->
-      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-        <h3 class="font-extrabold text-base text-brand-navy mb-4 flex items-center">
-          <i class="fa-solid fa-users-gear text-brand-cyan mr-2"></i>
-          Asignación Operativa del Equipo 4 · USAG
-        </h3>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center text-xs">
-          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-            <strong class="block text-slate-800 font-bold">Margarita Anda</strong>
-            <span class="text-brand-blue">Coordinación General</span>
-          </div>
-          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-            <strong class="block text-slate-800 font-bold">Gabriela Campuzano</strong>
-            <span class="text-brand-blue">Registro & Prototipo</span>
-          </div>
-          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-            <strong class="block text-slate-800 font-bold">Yessica Carmona</strong>
-            <span class="text-brand-blue">Filtro Humano & Ética</span>
-          </div>
-          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-            <strong class="block text-slate-800 font-bold">Edgar Robledo</strong>
-            <span class="text-brand-blue">Marketing & Video</span>
-          </div>
-          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-            <strong class="block text-slate-800 font-bold">Manuel Velázquez</strong>
-            <span class="text-brand-blue">Rutas & Reparto</span>
-          </div>
-          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
-            <strong class="block text-slate-800 font-bold">Jazmín Farre</strong>
-            <span class="text-brand-blue">Revisión & Viabilidad</span>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- ================================================================= -->
-    <!-- TAB 5: VIDEO PUBLICITARIO LUMA IA & MARKETING -->
+    <!-- TAB 3: VIDEO PUBLICITARIO LUMA IA & CAMPAÑA -->
     <!-- ================================================================= -->
     <section id="tab-marketing" class="tab-content hidden space-y-8">
       
       <div class="bg-gradient-to-r from-brand-navy to-brand-blue text-white p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="max-w-2xl">
           <span class="text-xs bg-white/20 text-cyan-200 font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-            🎬 Video Promocional con Luma IA & Redes Sociales
+            🎬 Video Promocional & Campaña de Hidratación
           </span>
           <h2 class="text-3xl font-extrabold mt-2 mb-3">
             "La Pureza que Cuida a Quienes Más Amas"
           </h2>
           <p class="text-slate-200 text-sm leading-relaxed">
-            Aquí pueden reproducir su video generado con <strong>Luma IA</strong>, combinando las fotos de los niños con la tecnología de captación en 1 clic y los pedidos por WhatsApp.
+            Conoce nuestra campaña de hidratación pura para escuelas, hogares y eventos en León, combinando agua 100% microfiltrada con pedidos en 1 clic y atención inmediata por WhatsApp.
           </p>
         </div>
         <img src="assets/logo.png" alt="Healthy Water" class="h-24 bg-white/95 p-3 rounded-2xl shadow-lg">
@@ -735,9 +514,9 @@
           <div class="flex items-center justify-between">
             <h3 class="font-extrabold text-lg text-slate-800 flex items-center">
               <i class="fa-solid fa-play text-brand-cyan mr-2"></i>
-              Reproductor del Video (Luma IA)
+              Spot Oficial de Video (Luma IA)
             </h3>
-            <span class="text-xs bg-brand-light text-brand-blue font-bold px-2.5 py-1 rounded-full">Formato 9:16</span>
+            <span class="text-xs bg-brand-light text-brand-blue font-bold px-2.5 py-1 rounded-full">Formato Vertical</span>
           </div>
 
           <!-- VIDEO PLAYER FRAME -->
@@ -749,18 +528,14 @@
               Tu navegador no soporta el formato de video.
             </video>
           </div>
-
-          <p class="text-[11px] text-slate-400 text-center">
-            Tip: También pueden guardar el archivo como <code>assets/video_luma.mp4</code> para que se cargue permanentemente.
-          </p>
         </div>
 
         <!-- STORYBOARD & PRODUCTION DETAILS (RIGHT 6 COLS) -->
         <div class="lg:col-span-6 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div class="flex items-center justify-between pb-4 border-b border-slate-100">
             <div>
-              <h3 class="font-extrabold text-xl text-brand-navy">Guion Técnico y Locución</h3>
-              <p class="text-xs text-slate-500">Duración: 35 segundos · TikTok, Reels y WhatsApp</p>
+              <h3 class="font-extrabold text-xl text-brand-navy">Locución Oficial</h3>
+              <p class="text-xs text-slate-500">Spot de Campaña Familiar y Deportiva</p>
             </div>
             <button onclick="playMockVoiceover()" id="play-audio-btn" class="px-4 py-2 bg-brand-cyan hover:bg-brand-blue text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm">
               <i class="fa-solid fa-volume-high mr-1.5"></i> Escuchar Locución
@@ -779,15 +554,12 @@
             </div>
           </div>
 
-          <!-- INSTRUCTIONS TO INTEGRATE THE WEB SCREEN RECORDING INTO THE VIDEO -->
+          <!-- QUALITY & PURITY VALUE BANNER -->
           <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2">
-            <strong class="text-brand-blue block text-sm"><i class="fa-solid fa-film mr-1"></i> Cómo agregar la grabación de la página al video:</strong>
-            <ol class="list-decimal list-inside space-y-1 text-slate-600">
-              <li>Abre en tu celular la página web oficial en GitHub: <code>https://margaritaanda-sys.github.io/healthy-water/</code>.</li>
-              <li>Activa la <em>Grabación de pantalla</em> de tu celular y haz clic en agregar 2 garrafones y enviar a WhatsApp.</li>
-              <li>Abre <strong>CapCut</strong> (o Canva), coloca de inicio el video de Luma IA de los niños (0-15s) y después inserta la grabación de la pantalla (15-28s).</li>
-              <li>Termina con el logo y el número <strong>477-877-6369</strong>. ¡El resultado final será de nivel profesional!</li>
-            </ol>
+            <strong class="text-brand-blue block text-sm"><i class="fa-solid fa-certificate mr-1.5 text-brand-cyan"></i> Compromiso de Calidad y Pureza:</strong>
+            <p class="text-slate-600 leading-relaxed">
+              Agua sometida a 7 etapas de purificación: filtración de sedimentos, carbón activado, suavizador, ósmosis inversa, pulidor microfiltrado, esterilización ultravioleta y ozono residual bajo la norma <strong>NOM-201-SSA1</strong>.
+            </p>
           </div>
 
         </div>
@@ -797,57 +569,6 @@
     </section>
 
   </main>
-
-  <!-- ================================================================= -->
-  <!-- MODAL: SIMULADOR DE ASISTENTE IA DE REPROGRAMACIÓN -->
-  <!-- ================================================================= -->
-  <div id="ai-reschedule-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 transform transition-all scale-100">
-      
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <div class="flex items-center space-x-2 text-brand-navy font-extrabold text-lg">
-          <div class="w-8 h-8 rounded-xl bg-blue-100 text-brand-blue flex items-center justify-center text-sm">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-          </div>
-          <span>Agente IA de Reprogramación</span>
-        </div>
-        <button onclick="closeRescheduleModal()" class="text-slate-400 hover:text-slate-600 text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="py-4 space-y-4 text-xs sm:text-sm">
-        <div class="bg-amber-50 border border-amber-200 text-amber-900 p-3 rounded-2xl flex items-start space-x-2">
-          <i class="fa-solid fa-triangle-exclamation text-base mt-0.5"></i>
-          <div>
-            <strong>Incidencia Reportada:</strong>
-            <p id="modal-client-info" class="text-slate-700 mt-0.5">El cliente no respondió en el timbre (Zona León Norte).</p>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-            Mensaje de WhatsApp Generado por la IA:
-          </label>
-          <textarea id="ai-generated-message" rows="4" class="w-full p-3 rounded-xl border border-slate-300 text-xs text-slate-700 font-mono bg-slate-50 focus:ring-2 focus:ring-brand-cyan outline-none leading-relaxed"></textarea>
-        </div>
-
-        <div class="p-3 bg-blue-50 rounded-2xl border border-blue-200 text-blue-900 text-xs">
-          <strong>Filtro Humano Activo:</strong> Supervisado por <em>Yessica Carmona (Atención y Pruebas)</em> para garantizar que ningún cliente se quede sin agua.
-        </div>
-      </div>
-
-      <div class="flex items-center justify-end space-x-3 pt-3 border-t border-slate-100">
-        <button onclick="closeRescheduleModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 transition">
-          Cancelar
-        </button>
-        <button onclick="confirmAiReschedule()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition flex items-center">
-          <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i> Enviar a 477-877-6369
-        </button>
-      </div>
-
-    </div>
-  </div>
 
   <!-- ================================================================= -->
   <!-- MODAL: CONFIRMACIÓN EXITOSA DE PEDIDO -->
@@ -861,7 +582,7 @@
 
       <h3 class="text-2xl font-extrabold text-slate-800 mb-2">¡Solicitud de Pedido Recibida!</h3>
       <p class="text-xs text-slate-500 mb-4 leading-relaxed">
-        Recibimos tu solicitud. Nuestro equipo revisará la ruta y te confirmará el turno de entrega formal por WhatsApp.
+        Recibimos tu solicitud con éxito. Nuestro equipo revisará la ruta y te confirmará el turno de entrega formal por WhatsApp.
       </p>
 
       <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2 mb-6">
@@ -874,12 +595,8 @@
           <strong id="modal-name">Gabriela Campuzano</strong>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-500">Ruta Asignada:</span>
+          <span class="text-slate-500">Zona de Cobertura:</span>
           <strong id="modal-route" class="text-brand-blue">Ruta 1 (León Norte)</strong>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-500">Repartidor Asignado:</span>
-          <strong id="modal-driver" class="text-slate-700">Manuel Velázquez</strong>
         </div>
         <div class="flex justify-between">
           <span class="text-slate-500">Horario acordado:</span>
@@ -896,7 +613,7 @@
           <i class="fa-brands fa-whatsapp text-base mr-2"></i> Abrir WhatsApp (477-877-6369)
         </a>
         <button onclick="closeSuccessModal()" class="w-full py-2.5 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition">
-          Ver Hoja de Ruta & Repartidores
+          Aceptar y Realizar Otro Pedido
         </button>
       </div>
 
