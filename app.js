@@ -94,73 +94,103 @@ const initialProducts = [
   }
 ];
 
-// 2. DISPATCH & ROUTE STATE (ZONA LEÓN NORTE & PIPAS)
-let dispatchOrders = [
-  {
-    id: 'HW-2026-101',
-    customer: 'Sra. Carmen Villalobos',
-    phone: '4772348910',
-    type: 'hogar',
-    address: 'Col. Valle del Campestre, Calle Manantial #204, León',
-    routeZone: 'Ruta 1 (León Norte)',
-    driverName: 'Manuel Velázquez',
-    itemsDesc: '3x Garrafón 20 Litros',
-    garrafonesCount: 3,
-    time: '09:00 - 12:00',
-    paymentMethod: 'Efectivo ($90.00)',
-    total: 90.00,
-    status: 'entregado',
-    notes: 'Entregado en puerta con cambio'
-  },
-  {
-    id: 'HW-2026-102',
-    customer: 'Despacho Contable García & Asoc.',
-    phone: '4779871234',
-    type: 'empresa',
-    address: 'Blvd. Campestre #1120, Piso 3, León',
-    routeZone: 'Ruta 1 (León Norte)',
-    driverName: 'Manuel Velázquez',
-    itemsDesc: '5x Garrafón 20L + 20x Botella 500ml',
-    garrafonesCount: 5,
-    time: '09:00 - 12:00',
-    paymentMethod: 'Crédito 15d (Factura)',
-    total: 250.00,
-    status: 'entregado',
-    notes: 'CFDI emitido a DGA180421XX3'
-  },
-  {
-    id: 'HW-2026-103',
-    customer: 'Lic. Roberto Morales',
-    phone: '4774567890',
-    type: 'hogar',
-    address: 'Col. Jardines del Moral, Calle Nubes #412, León',
-    routeZone: 'Ruta 1 (León Norte)',
-    driverName: 'Manuel Velázquez',
-    itemsDesc: '4x Garrafón 20 Litros',
-    garrafonesCount: 4,
-    time: '12:00 - 15:00',
-    paymentMethod: 'Efectivo ($120.00)',
-    total: 120.00,
-    status: 'en_ruta',
-    notes: 'En camino con la unidad #01'
-  },
-  {
-    id: 'HW-2026-104',
-    customer: 'Constructora Bajío Norte S.A.',
-    phone: '4778776369',
-    type: 'empresa',
-    address: 'Prolongación Blvd. Hidalgo #4500, León',
-    routeZone: 'Ruta Especial Pipas',
-    driverName: 'Unidad Pipa Cisterna',
-    itemsDesc: '1x Media Pipa (5,000 Litros)',
-    garrafonesCount: 0,
-    time: '15:00 - 18:00',
-    paymentMethod: 'Crédito 30d (Factura)',
-    total: 600.00,
-    status: 'en_ruta',
-    notes: 'Suministro en cisterna industrial'
+// 2. DISPATCH & ROUTE STATE (SINCRONIZADO CON STORAGE Y APP 2 ADMIN)
+const STORAGE_KEY = 'hw_orders_db';
+
+let dispatchOrders = [];
+
+function loadStoredOrders() {
+  const existing = localStorage.getItem(STORAGE_KEY);
+  if (existing) {
+    try {
+      dispatchOrders = JSON.parse(existing);
+      return;
+    } catch (e) {
+      console.error('Error parsing stored orders', e);
+    }
   }
-];
+
+  // Initial Seed
+  dispatchOrders = [
+    {
+      id: 'HW-2026-1041',
+      customer: 'Lic. Fernando Ortiz',
+      phone: '4771234567',
+      type: 'hogar',
+      address: 'Col. Gran Jardín, Calle Bosques #512, León',
+      routeZone: 'Ruta 1 (León Norte)',
+      driverName: 'Manuel Velázquez',
+      itemsDesc: '2x Garrafón 20 Litros',
+      garrafonesCount: 2,
+      time: '09:00 - 12:00',
+      paymentStatus: 'paid_online',
+      paymentGateway: 'Mercado Pago (Tarjeta Débito)',
+      paymentMethodText: 'Pagado en Línea ($60.00 MXN)',
+      paymentMethod: 'Pagado en Línea ($60.00 MXN)',
+      total: 60.00,
+      status: 'en_ruta',
+      notes: '¡Dejar en caseta de vigilancia con guardia Juan si no responde! Vuelta asegurada.'
+    },
+    {
+      id: 'HW-2026-1042',
+      customer: 'Sra. Carmen Villalobos',
+      phone: '4772348910',
+      type: 'hogar',
+      address: 'Col. Valle del Campestre, Calle Manantial #204, León',
+      routeZone: 'Ruta 1 (León Norte)',
+      driverName: 'Manuel Velázquez',
+      itemsDesc: '3x Garrafón 20 Litros',
+      garrafonesCount: 3,
+      time: '09:00 - 12:00',
+      paymentStatus: 'cash_pending',
+      paymentGateway: 'Efectivo',
+      paymentMethodText: 'Efectivo contra entrega (Llevar cambio de $200)',
+      paymentMethod: 'Efectivo ($90.00)',
+      total: 90.00,
+      status: 'pendiente',
+      notes: 'Cliente solicitó cambio de $200. Pendiente validación de Yessy.'
+    },
+    {
+      id: 'HW-2026-1043',
+      customer: 'Despacho Contable García & Asoc.',
+      phone: '4779871234',
+      type: 'empresa',
+      address: 'Blvd. Campestre #1120, Piso 3, León',
+      routeZone: 'Ruta 1 (León Norte)',
+      driverName: 'Manuel Velázquez',
+      itemsDesc: '5x Garrafón 20L + 20x Botella 500ml',
+      garrafonesCount: 5,
+      time: '12:00 - 15:00',
+      paymentStatus: 'paid_online',
+      paymentGateway: 'Stripe SPEI Directo',
+      paymentMethodText: 'Pagado en Línea (Transferencia SPEI)',
+      paymentMethod: 'Pagado en Línea ($250.00)',
+      total: 250.00,
+      status: 'en_ruta',
+      notes: 'CFDI emitido a DGA180421XX3. Entrega en recepción corporativa.'
+    },
+    {
+      id: 'HW-2026-1044',
+      customer: 'Constructora Bajío Norte S.A.',
+      phone: '4778776369',
+      type: 'empresa',
+      address: 'Prolongación Blvd. Hidalgo #4500, León',
+      routeZone: 'Ruta Especial Pipas',
+      driverName: 'Unidad Pipa Cisterna',
+      itemsDesc: '1x Media Pipa (5,000 Litros)',
+      garrafonesCount: 0,
+      time: '15:00 - 18:00',
+      paymentStatus: 'cash_pending',
+      paymentGateway: 'Crédito Corporativo 30d',
+      paymentMethodText: 'Crédito a 30 días (Factura CFDI)',
+      paymentMethod: 'Crédito 30d ($600.00)',
+      total: 600.00,
+      status: 'en_ruta',
+      notes: 'Suministro en cisterna industrial'
+    }
+  ];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(dispatchOrders));
+}
 
 // STATE VARIABLES
 let currentClientType = 'hogar'; // 'hogar' | 'empresa'
@@ -169,10 +199,15 @@ let currentSelectedOrderForAI = null;
 let salesChartInstance = null;
 let mixChartInstance = null;
 
+// PAYMENT GATEWAY SIMULATOR STATE
+let isOnlinePaymentVerified = false;
+let currentGatewayTab = 'card';
+
 // ============================================================================
 // INITIALIZATION ON DOM READY
 // ============================================================================
 document.addEventListener('DOMContentLoaded', () => {
+  loadStoredOrders();
   renderProducts();
   renderCart();
   renderRoutesTable();
@@ -442,6 +477,101 @@ function assignZoneRoute(address, hasPipa) {
 }
 
 // ============================================================================
+// MODALES & PAGOS EN LÍNEA (STRIPE / MERCADO PAGO) & PRIVACIDAD LFPDPPP
+// ============================================================================
+function togglePaymentInputs(choice) {
+  const cashContainer = document.getElementById('cash-change-container');
+  if (choice === 'efectivo') {
+    if (cashContainer) cashContainer.classList.remove('hidden');
+  } else {
+    if (cashContainer) cashContainer.classList.add('hidden');
+  }
+}
+
+function openPaymentModal() {
+  const items = Object.keys(cart);
+  if (items.length === 0) {
+    alert('Por favor selecciona primero tus garrafones o productos en el catálogo.');
+    return;
+  }
+
+  let total = 0;
+  items.forEach(id => {
+    const prod = initialProducts.find(p => p.id === id);
+    const qty = cart[id];
+    const price = currentClientType === 'hogar' ? prod.priceHogar : prod.priceEmpresa;
+    total += price * qty;
+  });
+
+  const totalDisplay = document.getElementById('gateway-total-display');
+  if (totalDisplay) {
+    totalDisplay.innerText = `$${total.toFixed(2)} MXN`;
+  }
+
+  const modal = document.getElementById('payment-gateway-modal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function closePaymentModal() {
+  const modal = document.getElementById('payment-gateway-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function selectGatewayTab(tab) {
+  currentGatewayTab = tab;
+  const btnCard = document.getElementById('tab-gw-card');
+  const btnSpei = document.getElementById('tab-gw-spei');
+  const viewCard = document.getElementById('gw-card-view');
+  const viewSpei = document.getElementById('gw-spei-view');
+
+  if (tab === 'card') {
+    if (btnCard) {
+      btnCard.className = 'py-2 rounded-xl bg-brand-navy text-white text-xs transition font-bold';
+    }
+    if (btnSpei) {
+      btnSpei.className = 'py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs transition font-bold';
+    }
+    if (viewCard) viewCard.classList.remove('hidden');
+    if (viewSpei) viewSpei.classList.add('hidden');
+  } else {
+    if (btnSpei) {
+      btnSpei.className = 'py-2 rounded-xl bg-brand-navy text-white text-xs transition font-bold';
+    }
+    if (btnCard) {
+      btnCard.className = 'py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs transition font-bold';
+    }
+    if (viewSpei) viewSpei.classList.remove('hidden');
+    if (viewCard) viewCard.classList.add('hidden');
+  }
+}
+
+function confirmOnlinePaymentSuccess() {
+  isOnlinePaymentVerified = true;
+  closePaymentModal();
+
+  const btnText = document.getElementById('btn-pay-modal-text');
+  const pill = document.getElementById('payment-verified-pill');
+  if (btnText) btnText.innerText = '✅ Pago en Línea Acreditado';
+  if (pill) pill.classList.remove('hidden');
+
+  // Ensure radio is online
+  const radioOnline = document.querySelector('input[name="payment_choice"][value="online"]');
+  if (radioOnline) radioOnline.checked = true;
+
+  alert('🎉 ¡Pago verificado con éxito vía Stripe / Mercado Pago! Tu entrega queda 100% garantizada en puerta o vigilancia.');
+}
+
+function openPrivacyModal() {
+  const modal = document.getElementById('privacy-modal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function closePrivacyModal() {
+  const modal = document.getElementById('privacy-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+// ============================================================================
 // 1-CLICK ORDER SUBMISSION (CAPTACIÓN REAL A WHATSAPP: 477-877-6369)
 // ============================================================================
 function handlePlaceOrder(e) {
@@ -450,6 +580,13 @@ function handlePlaceOrder(e) {
   const items = Object.keys(cart);
   if (items.length === 0) {
     alert('Por favor selecciona al menos un producto para aperturar tu pedido.');
+    return;
+  }
+
+  // Privacy consent verification (LFPDPPP)
+  const consentCheckbox = document.getElementById('cust-privacy-consent');
+  if (consentCheckbox && !consentCheckbox.checked) {
+    alert('Por favor acepta el Aviso de Privacidad para continuar con el tratamiento seguro de tus datos conforme a la LFPDPPP.');
     return;
   }
 
@@ -481,15 +618,33 @@ function handlePlaceOrder(e) {
     prod.stock -= qty;
   });
 
-  // Payment info
+  // Payment info & status calculation
   let paymentText = '';
+  let paymentStatus = 'cash_pending';
+  let paymentGateway = 'Efectivo';
+  let isOnline = false;
+
   if (currentClientType === 'hogar') {
-    const changeWith = document.getElementById('cust-change').value.trim();
-    paymentText = changeWith ? `Efectivo contra entrega (Paga con $${changeWith})` : 'Efectivo contra entrega';
+    const choiceElem = document.querySelector('input[name="payment_choice"]:checked');
+    const choice = choiceElem ? choiceElem.value : 'online';
+
+    if (choice === 'online') {
+      isOnline = true;
+      paymentStatus = 'paid_online';
+      paymentGateway = currentGatewayTab === 'card' ? 'Mercado Pago / Stripe (Tarjeta)' : 'Stripe SPEI Directo';
+      paymentText = `PAGADO EN LÍNEA (${paymentGateway}) · $${total.toFixed(2)} MXN`;
+    } else {
+      const changeWith = document.getElementById('cust-change').value.trim();
+      paymentStatus = 'cash_pending';
+      paymentGateway = 'Efectivo contra entrega';
+      paymentText = changeWith ? `Efectivo contra entrega (Paga con $${changeWith})` : `Efectivo contra entrega ($${total.toFixed(2)})`;
+    }
   } else {
     const terms = document.getElementById('cust-b2b-terms').value;
     const rfc = document.getElementById('cust-rfc').value.trim() || 'Pendiente CFDI';
     const razon = document.getElementById('cust-razon').value.trim();
+    paymentStatus = 'cash_pending';
+    paymentGateway = `B2B: ${terms}`;
     paymentText = `${terms.replace('_', ' ').toUpperCase()} · RFC: ${rfc} ${razon ? '(' + razon + ')' : ''}`;
   }
 
@@ -511,14 +666,24 @@ function handlePlaceOrder(e) {
     itemsDesc: itemsSummary.join(', '),
     garrafonesCount: garrafonesCount,
     time: horario,
+    paymentStatus: paymentStatus,
+    paymentGateway: paymentGateway,
+    paymentMethodText: paymentText,
     paymentMethod: paymentText,
     total: total,
-    status: 'en_ruta',
-    notes: 'Aperturado vía Web 1-Clic'
+    status: isOnline ? 'en_ruta' : 'pendiente',
+    notes: isOnline 
+      ? '¡PAGADO EN LÍNEA! Si el cliente no se encuentra, dejar en caseta o puerta. Vuelta garantizada.' 
+      : 'Aperturado vía Web 1-Clic. Pendiente validación de Yessy Carmona.'
   };
 
-  // Add to dispatch list
+  // Add to dispatch list & sync with localStorage (App 2 Admin can read it immediately!)
   dispatchOrders.unshift(newOrder);
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dispatchOrders));
+  } catch (err) {
+    console.error('Error saving order', err);
+  }
 
   // Update UI & Modals
   document.getElementById('modal-folio').innerText = folio;
@@ -534,6 +699,11 @@ function handlePlaceOrder(e) {
     gpsLink = `\n📍 *Ubicación GPS:* https://maps.google.com/?q=${capturedGPS.lat},${capturedGPS.lon}`;
   }
 
+  let paymentGuaranteeNotice = '';
+  if (isOnline) {
+    paymentGuaranteeNotice = `\n⭐ *GARANTÍA HEALTHY WATER:* Pedido ya pagado en línea con ${paymentGateway}. Si no se encuentra el cliente en el domicilio, dejar el producto en caseta de vigilancia, recepción o en puerta (vuelta asegurada sin pérdidas).\n`;
+  }
+
   const waMsg = encodeURIComponent(
     `💧 *¡NUEVO PEDIDO HEALTHY WATER!* 💧\n` +
     `--------------------------------------\n` +
@@ -545,10 +715,11 @@ function handlePlaceOrder(e) {
     `🚚 *Ruta Asignada:* ${routeAllocation.zone} (${routeAllocation.driver})\n` +
     `📦 *Pedido Solicitado:*\n• ${itemsSummary.join('\n• ')}\n` +
     `⏰ *Horario Preferido:* ${horario}\n` +
-    `💵 *Forma de Pago:* ${paymentText}\n` +
-    `💰 *TOTAL A COBRAR:* $${total.toFixed(2)} MXN` +
+    `💳 *Estatus de Pago:* ${paymentText}\n` +
+    `💰 *TOTAL:* $${total.toFixed(2)} MXN` +
+    paymentGuaranteeNotice +
     gpsLink + `\n--------------------------------------\n` +
-    `✅ _Enviado automáticamente desde la plataforma Healthy Water en 1 clic._`
+    `🔒 _Consentimiento de Privacidad LFPDPPP aceptado. Sistema Healthy Water._`
   );
 
   // Direct WhatsApp Link to 477-877-6369
@@ -563,6 +734,7 @@ function handlePlaceOrder(e) {
 
   // Reset cart
   cart = {};
+  isOnlinePaymentVerified = false;
   renderProducts();
   renderCart();
   renderRoutesTable();
@@ -676,6 +848,9 @@ function markDelivered(orderId) {
 
   order.status = 'entregado';
   order.notes = 'Entrega confirmada en punto';
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dispatchOrders));
+  } catch (e) {}
   renderRoutesTable();
   updateVehicleLoad();
   updateDashboardMetrics();

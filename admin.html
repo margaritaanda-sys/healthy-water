@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Operativo Healthy Water | Módulo Admin & Roles (Clerk RBAC)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#00A0E3',
+              blue: '#0B4F8A',
+              navy: '#052A4A',
+              light: '#E6F6FD',
+              accent: '#00C896',
+              warning: '#F59E0B'
+            },
+            clerk: {
+              purple: '#6C47FF',
+              dark: '#13111C',
+              light: '#F4F2FF'
+            }
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+
+  <!-- TOP SECURITY & CLERK AUTH BANNER -->
+  <header class="bg-brand-navy text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- MAIN NAVBAR -->
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- LOGO & BRAND -->
+        <div class="flex items-center space-x-3">
+          <a href="index.html" class="flex items-center space-x-3 group">
+            <img src="assets/logo.png" alt="Healthy Water" class="h-12 w-auto object-contain bg-white/90 p-1 rounded-xl group-hover:scale-105 transition">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs uppercase tracking-widest text-brand-cyan font-bold block">App 2 · Módulo Operativo</span>
+                <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[10px] px-2 py-0.5 rounded-full font-semibold">En Vivo</span>
+              </div>
+              <span class="text-lg font-black text-white tracking-tight">Healthy Water Admin</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- CLERK AUTHENTICATION PROFILE & ROLE SWITCHER -->
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          
+          <!-- CLERK BADGE -->
+          <div class="hidden md:flex items-center space-x-2 bg-clerk-dark/80 border border-clerk-purple/50 px-3 py-1.5 rounded-2xl text-xs">
+            <div class="w-5 h-5 rounded-full bg-clerk-purple text-white flex items-center justify-center text-[10px] font-bold">
+              C
+            </div>
+            <div>
+              <span class="text-[10px] text-purple-300 font-bold block leading-none">Autenticado vía Clerk</span>
+              <span class="text-[9px] text-slate-400">JWT Seguro · Free Tier (10k usuarios)</span>
+            </div>
+          </div>
+
+          <!-- ACTIVE USER PROFILE & ROLE SELECTOR -->
+          <div class="bg-white/10 hover:bg-white/15 border border-white/20 rounded-2xl p-1.5 sm:px-3 flex items-center space-x-3 transition">
+            <img id="current-user-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" alt="Avatar" class="w-9 h-9 rounded-xl object-cover border-2 border-brand-cyan">
+            
+            <div class="text-left hidden sm:block">
+              <div class="flex items-center space-x-1.5">
+                <strong id="current-user-name" class="text-xs text-white block font-bold leading-tight">Margarita Anda</strong>
+                <span id="current-user-role-badge" class="bg-brand-cyan text-brand-navy text-[9px] font-black uppercase px-1.5 py-0.5 rounded">Admin</span>
+              </div>
+              <span id="current-user-email" class="text-[10px] text-slate-300 block">maggie@healthywater.mx</span>
+            </div>
+
+            <!-- ROLE SWITCHER DROPDOWN -->
+            <select id="role-selector" onchange="changeRole(this.value)" class="bg-brand-blue text-white text-xs font-semibold px-2 py-1.5 rounded-xl border border-white/30 outline-none cursor-pointer hover:bg-brand-navy transition">
+              <option value="admin">👑 Margarita Anda (Dirección / Admin)</option>
+              <option value="vendedora">🎧 Yessica Carmona (Ventas / Atención)</option>
+              <option value="repartidor">🚚 Manuel Velázquez (Repartidor)</option>
+            </select>
+          </div>
+
+          <!-- LINK BACK TO CLIENT STORE (APP 1) -->
+          <a href="index.html" class="bg-white/10 hover:bg-white/20 text-white p-2.5 sm:px-3 sm:py-2 rounded-xl text-xs font-bold transition flex items-center" title="Ir a la Tienda de Clientes (App 1)">
+            <i class="fa-solid fa-arrow-up-right-from-square sm:mr-1.5 text-brand-cyan"></i>
+            <span class="hidden sm:inline">Tienda Clientes (App 1)</span>
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ROLE CAPABILITY NOTIFICATION BAR -->
+      <div class="py-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-300">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+          <span>Rol Activo: <strong id="role-desc-title" class="text-white">Dirección General y Planificación</strong></span>
+          <span class="hidden md:inline text-slate-500">|</span>
+          <span id="role-desc-subtitle" class="hidden md:inline text-slate-400">Acceso total a finanzas, auditoría de seguridad LFPDPPP y gestión de stock.</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span class="text-slate-400"><i class="fa-solid fa-lock text-slate-500 mr-1"></i> RLS Supabase: <span class="text-emerald-400 font-bold">Activo</span></span>
+          <span class="hidden sm:inline text-slate-400">Planta: <strong class="text-white">San Miguel #1905B</strong></span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ========================================================================= -->
+  <!-- MAIN WORKSPACE -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-6">
+
+    <!-- SUB-NAV FOR ROLE VIEWS (IF USER IS ADMIN, CAN BROWSE ALL; OTHERS RESTRICTED) -->
+    <div id="admin-tabs-bar" class="flex items-center justify-between bg-white p-2 rounded-2xl border border-slate-200 shadow-sm">
+      <div class="flex space-x-1 sm:space-x-2">
+        <button onclick="switchAdminTab('kpis')" id="btn-tab-kpis" class="admin-tab active-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center">
+          <i class="fa-solid fa-chart-pie mr-1.5 text-brand-cyan"></i>
+          <span>Dashboard & Finanzas Reales</span>
+        </button>
+        <button onclick="switchAdminTab('ventas')" id="btn-tab-ventas" class="admin-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center text-slate-600 hover:bg-slate-100">
+          <i class="fa-solid fa-inbox mr-1.5 text-emerald-500"></i>
+          <span>Bandeja de Pedidos & Filtro Humano</span>
+          <span id="pending-badge-count" class="ml-1.5 bg-brand-cyan text-white text-[10px] px-1.5 py-0.2 rounded-full font-extrabold">2</span>
+        </button>
+        <button onclick="switchAdminTab('reparto')" id="btn-tab-reparto" class="admin-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center text-slate-600 hover:bg-slate-100">
+          <i class="fa-solid fa-truck-fast mr-1.5 text-blue-500"></i>
+          <span>Rutas de Chofer & Cobros</span>
+        </button>
+        <button onclick="switchAdminTab('seguridad')" id="btn-tab-seguridad" class="admin-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center text-slate-600 hover:bg-slate-100">
+          <i class="fa-solid fa-user-shield mr-1.5 text-purple-600"></i>
+          <span>Auditoría LFPDPPP & RLS</span>
+        </button>
+      </div>
+
+      <div class="hidden lg:flex items-center space-x-2 text-xs text-slate-500 pr-2">
+        <button onclick="reloadOrdersFromStorage()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs transition flex items-center">
+          <i class="fa-solid fa-rotate mr-1 text-brand-blue"></i> Sincronizar
+        </button>
+        <button onclick="resetDefaultMockData()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-500 font-medium rounded-lg text-[11px] transition">
+          Restablecer Datos Demo
+        </button>
+      </div>
+    </div>
+
+
+    <!-- ======================================================================= -->
+    <!-- VIEW 1: DASHBOARD & FINANZAS REALES (MAGGIE / DIRECCIÓN GENERAL) -->
+    <!-- ======================================================================= -->
+    <section id="view-kpis" class="admin-view space-y-6 block">
+
+      <!-- BANNER DE DATOS REALES DE LA PLANTA -->
+      <div class="bg-gradient-to-r from-brand-navy via-brand-blue to-cyan-700 text-white p-6 rounded-3xl shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="bg-emerald-400 text-brand-navy text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded-full">
+              Datos Reales Verificados
+            </span>
+            <span class="text-xs text-cyan-200">Planta Healthy Water · León, Guanajuato</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black tracking-tight mb-2">
+            Control de Costos de Producción y Rentabilidad
+          </h2>
+          <p class="text-xs sm:text-sm text-cyan-100 leading-relaxed">
+            Estructura directa de costos por garrafón: <strong>$6.54 MXN</strong> con precio de venta al público en <strong>$30.00 MXN</strong>, generando un margen de contribución bruto del <strong>78.2% ($23.46 MXN por unidad)</strong>. Cero gasto en licenciamiento con Free Tiers de Clerk, Supabase y GitHub Pages.
+          </p>
+        </div>
+        <div class="absolute -right-6 -bottom-6 opacity-10 pointer-events-none text-white">
+          <i class="fa-solid fa-chart-line text-[220px]"></i>
+        </div>
+      </div>
+
+      <!-- FINANCIAL KPI CARDS GRID -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- COSTO DIRECTO POR GARRAFÓN -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex justify-between items-start mb-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Costo Directo Unitario</span>
+            <span class="p-2 bg-blue-50 text-brand-blue rounded-xl text-sm"><i class="fa-solid fa-receipt"></i></span>
+          </div>
+          <div class="text-3xl font-black text-brand-navy mb-1">$6.54 <span class="text-xs font-normal text-slate-400">MXN</span></div>
+          <div class="text-[11px] text-slate-500 space-y-0.5 border-t border-slate-100 pt-2 mt-2">
+            <div class="flex justify-between"><span>Agua purificada (20L):</span> <strong>$3.30</strong></div>
+            <div class="flex justify-between"><span>Tapa / Linner:</span> <strong>$0.37</strong></div>
+            <div class="flex justify-between"><span>Etiqueta:</span> <strong>$1.70</strong></div>
+            <div class="flex justify-between"><span>Sello calor & desinf.:</span> <strong>$1.17</strong></div>
+          </div>
+        </div>
+
+        <!-- PRECIO Y MARGEN BRUTO -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex justify-between items-start mb-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Margen Bruto de Ganancia</span>
+            <span class="p-2 bg-emerald-50 text-emerald-600 rounded-xl text-sm"><i class="fa-solid fa-sack-dollar"></i></span>
+          </div>
+          <div class="text-3xl font-black text-emerald-600 mb-1">78.2%</div>
+          <p class="text-xs font-bold text-slate-700">+$23.46 MXN de margen / garrafón</p>
+          <div class="text-[11px] text-slate-500 border-t border-slate-100 pt-2 mt-2">
+            <span>Precio público: <strong>$30.00 MXN</strong>. Altamente resiliente ante costos fijos de energía y combustible.</span>
+          </div>
+        </div>
+
+        <!-- VOLUMEN REAL OCTUBRE -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex justify-between items-start mb-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Volumen Real Octubre</span>
+            <span class="p-2 bg-cyan-50 text-brand-cyan rounded-xl text-sm"><i class="fa-solid fa-boxes-stacked"></i></span>
+          </div>
+          <div class="text-3xl font-black text-brand-navy mb-1">3,899 <span class="text-xs font-normal text-slate-400">garrafones</span></div>
+          <p class="text-xs text-slate-600">Promedio: <strong>144.4 garrafones / día</strong></p>
+          <div class="text-[11px] text-slate-500 border-t border-slate-100 pt-2 mt-2">
+            <span>Rutas: 2,569 | Mostrador: 1,330.<br><strong>18,200 bolsas</strong> hidratación en eventos.</span>
+          </div>
+        </div>
+
+        <!-- IMPACTO DE PAGOS EN LÍNEA -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex justify-between items-start mb-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Ahorro en Vueltas Perdidas</span>
+            <span class="p-2 bg-purple-50 text-purple-600 rounded-xl text-sm"><i class="fa-solid fa-credit-card"></i></span>
+          </div>
+          <div class="text-3xl font-black text-purple-600 mb-1">100% <span class="text-xs font-normal text-slate-400">garantizado</span></div>
+          <p class="text-xs font-bold text-slate-700">Pedidos pagados en línea (Stripe/MP)</p>
+          <div class="text-[11px] text-slate-500 border-t border-slate-100 pt-2 mt-2">
+            <span>El pedido pagado se deja en puerta o vigilancia. Ahorro estimado de <strong>15% en gasolina</strong>.</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CHARTS SECTION -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- CHART 1: MARGEN Y ESTRUCTURA DE COSTOS -->
+        <div class="lg:col-span-6 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-base font-extrabold text-brand-navy">Desglose de Costo Directo vs Ganancia ($30.00)</h3>
+              <p class="text-xs text-slate-500">Estructura financiera validada de la planta en León</p>
+            </div>
+            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">Margen 78.2%</span>
+          </div>
+          <div class="h-64">
+            <canvas id="costMarginChart"></canvas>
+          </div>
+        </div>
+
+        <!-- CHART 2: MODALIDADES DE COBRO Y RETENCIÓN -->
+        <div class="lg:col-span-6 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-base font-extrabold text-brand-navy">Evolución de Cobros: En Línea vs Efectivo</h3>
+              <p class="text-xs text-slate-500">Migración hacia pagos prepagados para eliminar entregas fallidas</p>
+            </div>
+            <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-lg">Mercado Pago / Stripe</span>
+          </div>
+          <div class="h-64">
+            <canvas id="paymentsMixChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================================================= -->
+    <!-- VIEW 2: BANDEJA DE PEDIDOS & FILTRO HUMANO (YESSICA CARMONA) -->
+    <!-- ======================================================================= -->
+    <section id="view-ventas" class="admin-view space-y-6 hidden">
+
+      <!-- BANNER ÉTICO DEL FILTRO HUMANO (HUMAN-IN-THE-LOOP) -->
+      <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-3xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-start space-x-3">
+          <div class="p-3 bg-emerald-600 text-white rounded-2xl text-xl mt-0.5">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 class="text-base font-extrabold text-emerald-950">Filtro Humano Activo (Human-in-the-Loop)</h3>
+              <span class="bg-emerald-200 text-emerald-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Supervisión Yessy Carmona</span>
+            </div>
+            <p class="text-xs text-emerald-800 mt-1 max-w-2xl leading-relaxed">
+              Ningún pedido se despacha a la unidad sin validación previa. Las solicitudes de la web se registran en estado <em>Pendiente de Validación</em>; la vendedora confirma cobertura en León Norte, disponibilidad de garrafones y envía formalmente la confirmación por WhatsApp al cliente.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2 shrink-0">
+          <button onclick="approveAllPendingOrders()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center">
+            <i class="fa-solid fa-check-double mr-1.5"></i> Validar Todos a Ruta
+          </button>
+        </div>
+      </div>
+
+      <!-- INBOX TABLE OF ORDERS -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+        
+        <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="font-extrabold text-base text-brand-navy flex items-center">
+              <i class="fa-solid fa-list-check text-brand-cyan mr-2"></i> Bandeja Operativa de Solicitudes y Rutas
+            </h3>
+            <p class="text-xs text-slate-500">Historial en tiempo real sincronizado con Tienda Web (App 1)</p>
+          </div>
+
+          <!-- STATUS FILTER PILLS -->
+          <div class="flex items-center space-x-1.5 text-xs">
+            <button onclick="filterOrdersByStatus('all')" class="status-filter-btn active-filter px-3 py-1.5 rounded-lg font-bold bg-brand-navy text-white transition">Todos</button>
+            <button onclick="filterOrdersByStatus('pendiente')" class="status-filter-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Pendientes</button>
+            <button onclick="filterOrdersByStatus('en_ruta')" class="status-filter-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">En Ruta</button>
+            <button onclick="filterOrdersByStatus('entregado')" class="status-filter-btn px-3 py-1.5 rounded-lg font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Entregados</button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-black text-slate-500 uppercase tracking-wider">
+                <th class="py-3 px-4">Folio & Fecha</th>
+                <th class="py-3 px-4">Cliente & Contacto</th>
+                <th class="py-3 px-4">Dirección León</th>
+                <th class="py-3 px-4">Productos</th>
+                <th class="py-3 px-4">Modalidad Pago</th>
+                <th class="py-3 px-4">Estado</th>
+                <th class="py-3 px-4 text-center">Acciones Human-in-the-Loop</th>
+              </tr>
+            </thead>
+            <tbody id="orders-inbox-body" class="divide-y divide-slate-100 text-xs">
+              <!-- Dynamically populated by admin.js -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- BOT WHATSAPP SUPERVISOR & ETHICAL RESCHEDULE -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- ASISTENTE IA DE REPROGRAMACIÓN ÉTICA -->
+        <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="font-extrabold text-base text-brand-navy flex items-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-brand-cyan mr-2"></i> Asistente IA de Reprogramación Empática
+              </h4>
+              <p class="text-xs text-slate-500">Genera mensajes amables cuando el repartidor reporta cliente ausente</p>
+            </div>
+            <span class="bg-blue-100 text-brand-blue text-[10px] font-bold px-2 py-0.5 rounded">Filtro Ético</span>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Selecciona pedido con incidencia:</label>
+            <select id="reschedule-order-select" onchange="generateAiRescheduleDraft()" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs bg-white outline-none">
+              <!-- Options populated dynamically -->
+            </select>
+
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Mensaje sugerido por la IA (editable por Yessy antes de enviar):</label>
+            <textarea id="ai-reschedule-draft" rows="3" class="w-full p-3 rounded-xl border border-slate-300 text-xs font-sans text-slate-700 bg-white leading-relaxed outline-none"></textarea>
+
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-[11px] text-slate-500"><i class="fa-solid fa-shield text-emerald-500 mr-1"></i> Sin spam; tono cálido y resolutivo.</span>
+              <button onclick="sendAiRescheduleWhatsApp()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center">
+                <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i> Enviar Mensaje a Cliente
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHATSAPP BOT STATUS & FAQS -->
+        <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+          <h4 class="font-extrabold text-base text-brand-navy flex items-center">
+            <i class="fa-brands fa-whatsapp text-emerald-500 mr-2 text-lg"></i> Bot de Auto-Respuesta Inteligente
+          </h4>
+          <p class="text-xs text-slate-500">Atiende preguntas repetitivas 24/7 (Precios, Pipas, Zonas de Reparto)</p>
+
+          <div class="space-y-2 text-xs">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <strong class="text-brand-blue block">"¿Cuánto cuesta el garrafón?"</strong>
+              <span class="text-slate-600 text-[11px]">Respuesta: $30.00 MXN en León Norte con envío incluido.</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <strong class="text-brand-blue block">"¿Tienen pipas para cisternas?"</strong>
+              <span class="text-slate-600 text-[11px]">Respuesta: Sí, Media Pipa 5,000L ($600) y Pipa 10,000L ($900).</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <strong class="text-brand-blue block">"¿Cómo puedo pagar?"</strong>
+              <span class="text-slate-600 text-[11px]">Respuesta: Efectivo al recibir o Pago en Línea (Tarjeta/SPEI) para entrega garantizada en puerta.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================================================= -->
+    <!-- VIEW 3: RUTAS DE CHOFER & COBROS (MANUEL VELÁZQUEZ / REPARTIDOR) -->
+    <!-- ======================================================================= -->
+    <section id="view-reparto" class="admin-view space-y-6 hidden">
+
+      <!-- DRIVER VEHICLE LOAD STATUS & QUICK STATS -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+        
+        <!-- VEHICLE LOAD CAPACITY (MAX 60 GARRAFONES) -->
+        <div class="md:col-span-8 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Unidad Asignada #01 (Placas GTO-849-B)</span>
+              <h3 class="text-xl font-extrabold text-brand-navy">Manuel Velázquez · Zona León Norte</h3>
+            </div>
+            <span id="driver-load-badge" class="bg-brand-light text-brand-blue font-black px-3 py-1 rounded-xl text-xs border border-brand-cyan/30">
+              42 / 60 Garrafones
+            </span>
+          </div>
+
+          <div>
+            <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+              <div id="driver-load-bar" class="bg-gradient-to-r from-brand-cyan to-brand-blue h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-slate-500 mt-1.5">
+              <span>Límite físico de seguridad: <strong>60 garrafones</strong> para prevenir mermas y desgaste vehicular.</span>
+              <span id="driver-free-slots" class="font-bold text-brand-navy">18 garrafones disponibles</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK COUNTERS -->
+        <div class="md:col-span-4 grid grid-cols-2 gap-3">
+          <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl text-center">
+            <span class="text-[11px] font-bold text-emerald-800 uppercase block">Pagados en Línea</span>
+            <span id="driver-count-paid" class="text-2xl font-black text-emerald-700 block my-1">2</span>
+            <span class="text-[10px] text-emerald-600">¡Dejar en puerta seguro!</span>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-center">
+            <span class="text-[11px] font-bold text-amber-800 uppercase block">Cobro Efectivo</span>
+            <span id="driver-count-cash" class="text-2xl font-black text-amber-700 block my-1">2</span>
+            <span class="text-[10px] text-amber-600">Cobro en entrega</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DISPATCH CARDS FOR DRIVER (MOBILE-FIRST UI) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-extrabold text-brand-navy flex items-center">
+            <i class="fa-solid fa-map-location-dot text-brand-cyan mr-2"></i> Hoja de Ruta Activa para Entrega
+          </h3>
+          <span class="text-xs text-slate-500">Ordenado por optimización de ruta norte</span>
+        </div>
+
+        <div id="driver-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Dynamically populated driver delivery cards -->
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ======================================================================= -->
+    <!-- VIEW 4: AUDITORÍA LFPDPPP & RLS DE SUPABASE (SEGURIDAD DE LA APP) -->
+    <!-- ======================================================================= -->
+    <section id="view-seguridad" class="admin-view space-y-6 hidden">
+
+      <!-- BANNER DE CUMPLIMIENTO LEGAL & TÉCNICO -->
+      <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-lg border border-slate-800">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 mb-2">
+              <span class="bg-purple-500 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full">
+                Cumplimiento INAI / LFPDPPP
+              </span>
+              <span class="text-xs text-purple-300">Seguridad & Cifrado en Reposo</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black">
+              Arquitectura de Protección de Datos Personales
+            </h3>
+            <p class="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              Healthy Water resguarda números telefónicos y ubicaciones domiciliarias de cientos de familias en León. El sistema implementa <strong>Row-Level Security (RLS) en Supabase</strong>, enmascaramiento dinámico de datos para choferes y tokens JWT de sesión generados por <strong>Clerk</strong>.
+            </p>
+          </div>
+
+          <div class="bg-slate-800/90 border border-slate-700 p-4 rounded-2xl min-w-[240px] text-xs space-y-1.5">
+            <div class="flex justify-between"><span>Cifrado DB:</span> <strong class="text-emerald-400">AES-256</strong></div>
+            <div class="flex justify-between"><span>Autenticación:</span> <strong class="text-purple-300">Clerk JWT (15 min)</strong></div>
+            <div class="flex justify-between"><span>Retención PII:</span> <strong class="text-white">12 meses máx.</strong></div>
+            <div class="flex justify-between"><span>Enmascaramiento Chofer:</span> <strong class="text-cyan-400">Habilitado</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE SUPABASE RLS POLICIES -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center space-x-2 text-purple-700 font-extrabold text-sm mb-2">
+            <i class="fa-solid fa-table"></i>
+            <span>Tabla `orders` (RLS Activo)</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-3">Política que restringe la lectura de pedidos exclusivamente al personal con rol validado.</p>
+          <pre class="bg-slate-900 text-purple-300 p-3 rounded-xl text-[10px] font-mono overflow-x-auto">CREATE POLICY "Staff can view orders"
+ON orders FOR SELECT
+TO authenticated
+USING (auth.jwt() ->> 'role' IN 
+  ('admin', 'vendedora', 'repartidor'));</pre>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center space-x-2 text-brand-blue font-extrabold text-sm mb-2">
+            <i class="fa-solid fa-user-lock"></i>
+            <span>Enmascaramiento Chofer (PII)</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-3">Los números de teléfono se anonimizan en pantalla para evitar fugas de listas comerciales.</p>
+          <pre class="bg-slate-900 text-cyan-300 p-3 rounded-xl text-[10px] font-mono overflow-x-auto">SELECT id, customer,
+  CONCAT(SUBSTRING(phone, 1, 3), 
+         '-***-', 
+         SUBSTRING(phone, 7, 4)) AS masked_phone
+FROM orders;</pre>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center space-x-2 text-emerald-700 font-extrabold text-sm mb-2">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Depuración LFPDPPP (12 Meses)</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-3">Cron job automatizado en PostgreSQL que elimina coordenadas GPS y teléfonos antiguos.</p>
+          <pre class="bg-slate-900 text-emerald-300 p-3 rounded-xl text-[10px] font-mono overflow-x-auto">SELECT cron.schedule(
+  'purge-old-pii',
+  '0 3 * * *',
+  $$ UPDATE orders 
+     SET phone = 'ANON', address = 'ARCHIVED' 
+     WHERE created_at < NOW() - INTERVAL '1 year' $$
+);</pre>
+        </div>
+
+      </div>
+
+      <!-- AUDIT LOG TABLE -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h4 class="font-extrabold text-base text-brand-navy flex items-center">
+              <i class="fa-solid fa-clipboard-list text-brand-cyan mr-2"></i> Registro de Auditoría de Acceso en Tiempo Real (Audit Log)
+            </h4>
+            <p class="text-xs text-slate-500">Trazabilidad de cada consulta a datos sensibles de clientes</p>
+          </div>
+          <span class="text-xs text-slate-400"><i class="fa-solid fa-circle text-emerald-500 text-[10px] mr-1"></i> Auditoría Activa</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">
+                <th class="py-3 px-4">Hora</th>
+                <th class="py-3 px-4">Usuario Clerk</th>
+                <th class="py-3 px-4">Rol</th>
+                <th class="py-3 px-4">Acción Realizada</th>
+                <th class="py-3 px-4">Recurso Afectado</th>
+                <th class="py-3 px-4">IP / Origen</th>
+              </tr>
+            </thead>
+            <tbody id="audit-log-body" class="divide-y divide-slate-100">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="bg-brand-navy text-slate-400 text-xs py-6 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <img src="assets/logo.png" alt="Healthy Water" class="h-8 w-auto bg-white/90 p-1 rounded-lg">
+        <div>
+          <strong class="text-white block">Healthy Water · Módulo de Gestión Operativa (App 2)</strong>
+          <span>Purificadora Healthy Water · Calle Independencia #1905B, Col. San Miguel, León, Gto.</span>
+        </div>
+      </div>
+      <div class="text-center sm:text-right text-[11px]">
+        <p>Maestría en Alta Dirección y Planificación de Proyectos · USAG</p>
+        <p class="text-slate-500 mt-0.5">Equipo 4: Margarita Anda, Gabriela Campuzano, Yessica Carmona, Edgar Robledo, Manuel Velázquez, Jazmín Farre.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script src="admin.js"></script>
+</body>
+</html>
